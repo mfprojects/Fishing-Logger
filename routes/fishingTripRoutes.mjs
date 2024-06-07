@@ -1,10 +1,10 @@
 import express from 'express';
-import fishingTripController from '../controllers/fishingTripController.mjs';
+import { createFishingTrip, getFishingTripById } from '../controllers/fishingTripController.mjs'; // Use named imports
 
 const router = express.Router();
 
-router.post('/fishingTrips', fishingTripController.createFishingTrip);
-router.get('/fishingTrips/:id', fishingTripController.getFishingTripById);
+router.post('/fishing-trips', createFishingTrip);
+router.get('/fishing-trips/:id', getFishingTripById);
 
 // Additional routes as needed
 

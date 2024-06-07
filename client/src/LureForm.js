@@ -1,32 +1,28 @@
 import React, { useState } from 'react';
 
 const LureForm = () => {
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Submitting:", name)
-
+    console.log('Submitting:', name); // Debugging log
     try {
-      const response = await fetch('/api/lures', {
+      const response = await fetch('http://localhost:5000/api/lures', { // Ensure correct URL
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name }),
+        body: JSON.stringify({ typeOfLure: name }), // Correct body structure
       });
-      console.log("Response:", response)
+      console.log('Response:', response); // Debugging log
       if (response.ok) {
         const data = await response.json();
-        console.log("Lure Created", data); // Log the newly created lure
+        console.log('Lure created:', data); // Debugging log
       } else {
         console.error('Failed to create lure:', response.statusText);
       }
-
-      // Reset form fields or display a success message
-      //setName(''); // Reset the name field
     } catch (error) {
-      console.error('Error creating lure:', error);
+      console.error('Error:', error);
     }
   };
 
@@ -36,9 +32,9 @@ const LureForm = () => {
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        placeholder="Enter Lure Name"
+        placeholder="Enter lure name"
       />
-      <button type="submit">Create Lure</button>
+      <button type="submit">Submit</button>
     </form>
   );
 };

@@ -1,34 +1,39 @@
-import { v4 as uuidv4 } from 'uuid';
+//import { v4 as uuidv4 } from 'uuid';
 
-const lures = [];
+import db from '../db/sqlite.mjs';
 
 const Lure = {
   create: (typeOfLure, callback) => {
-    const newLure = { id: uuidv4(), typeOfLure };
-    lures.push(newLure);
-    callback(null, newLure);
+    const query = `INSERT INTO lure (typeOfLure) VALUES (?)`;
+    db.run(query, [typeOfLure], function (err) {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, { id: this.lastID, typeOfLure });
+      }
+    });
   },
   findById: (id, callback) => {
-    const lure = lures.find(l => l.id === id);
-    callback(null, lure);
+    const query = `SELECT * FROM lure WHERE id = ?`;
+    db.get(query, [id], (err, lure) => {
+      callback(err, lure);
+    });
   },
   update: (id, typeOfLure, callback) => {
-    const index = lures.findIndex(l => l.id === id);
-    if (index !== -1) {
-      lures[index].typeOfLure = typeOfLure;
-      callback(null, lures[index]);
-    } else {
-      callback(new Error('Lure not found'));
-    }
+    const query = `UPDATE lure SET typeOfLure = ? WHERE id = ?`;
+    db.run(query, [typeOfLure, id], function (err) {
+      if (err) {
+        callback(err);
+      } else {
+        Lure.findById(id, callback);
+      }
+    });
   },
   delete: (id, callback) => {
-    const index = lures.findIndex(l => l.id === id);
-    if (index !== -1) {
-      lures.splice(index, 1);
-      callback(null);
-    } else {
-      callback(new Error('Lure not found'));
-    }
+    const query = `DELETE FROM lure WHERE id = ?`;
+    db.run(query, [id], (err) => {
+      callback(err);
+    });
   }
 };
 

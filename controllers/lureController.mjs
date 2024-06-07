@@ -3,11 +3,14 @@ import Lure from '../models/lureModel.mjs';
 // Create a new lure
 export const createLure = (req, res) => {
   const { typeOfLure } = req.body;
+  console.log('Received request to create lure:', typeOfLure); // Debugging log
 
   Lure.create(typeOfLure, (err, lure) => {
     if (err) {
+      console.error('Failed to create lure:', err); // Debugging log
       return res.status(500).json({ error: err.message });
     }
+    console.log('Lure created:', lure); // Debugging log
     res.status(201).json(lure);
   });
 };
@@ -53,4 +56,8 @@ export const deleteLure = (req, res) => {
     }
     res.status(204).json({ message: 'Lure deleted' });
   });
+};
+
+export default {
+  createLure
 };
