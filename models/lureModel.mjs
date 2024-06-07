@@ -1,6 +1,6 @@
 import db from '../db/sqlite.mjs';
 
-class lure {
+class Lure {
   static create(typeOfLure, callback) {
     db.run(
       `INSERT INTO lure (typeOfLure) VALUES (?)`,
@@ -26,4 +26,4 @@ class lure {
   // Additional CRUD methods as needed
 }
 
-export default User;
+export default Lure;

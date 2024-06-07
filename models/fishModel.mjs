@@ -47,4 +47,4 @@ class Fish {
   // Additional CRUD methods as needed
 }
 
-export default User;
+export default Fish;

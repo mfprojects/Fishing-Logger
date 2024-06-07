@@ -26,4 +26,4 @@ class FishingTrip {
   // Additional CRUD methods as needed
 }
 
-export default User;
+export default FishingTrip;
