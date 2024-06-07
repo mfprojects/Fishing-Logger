@@ -1,29 +1,35 @@
-import db from '../db/sqlite.mjs';
+import { v4 as uuidv4 } from 'uuid';
 
-class Lure {
-  static create(typeOfLure, callback) {
-    db.run(
-      `INSERT INTO lure (typeOfLure) VALUES (?)`,
-      [typeOfLure],
-      function (err) {
-        if (err) {
-          return callback(err);
-        }
-        callback(null, { id: this.lastID, typeOfLure });
-      }
-    );
+const lures = [];
+
+const Lure = {
+  create: (typeOfLure, callback) => {
+    const newLure = { id: uuidv4(), typeOfLure };
+    lures.push(newLure);
+    callback(null, newLure);
+  },
+  findById: (id, callback) => {
+    const lure = lures.find(l => l.id === id);
+    callback(null, lure);
+  },
+  update: (id, typeOfLure, callback) => {
+    const index = lures.findIndex(l => l.id === id);
+    if (index !== -1) {
+      lures[index].typeOfLure = typeOfLure;
+      callback(null, lures[index]);
+    } else {
+      callback(new Error('Lure not found'));
+    }
+  },
+  delete: (id, callback) => {
+    const index = lures.findIndex(l => l.id === id);
+    if (index !== -1) {
+      lures.splice(index, 1);
+      callback(null);
+    } else {
+      callback(new Error('Lure not found'));
+    }
   }
-
-  static findById(id, callback) {
-    db.get(`SELECT * FROM lure WHERE id = ?`, [id], (err, row) => {
-      if (err) {
-        return callback(err);
-      }
-      callback(null, row);
-    });
-  }
-
-  // Additional CRUD methods as needed
-}
+};
 
 export default Lure;

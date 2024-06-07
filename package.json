@@ -2,7 +2,7 @@
   "name": "fishing-app",
   "version": "1.0.0",
   "main": "index.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
@@ -14,7 +14,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

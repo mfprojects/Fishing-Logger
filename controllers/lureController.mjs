@@ -12,18 +12,18 @@ export const createLure = (req, res) => {
   });
 };
 
-// Get a fish by ID
+// Get a lure by ID
 export const getLureById = (req, res) => {
   const { id } = req.params;
 
-  Fish.findById(id, (err, lure) => {
+  Lure.findById(id, (err, lure) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
     if (!lure) {
       return res.status(404).json({ error: 'Lure not found' });
     }
-    res.status(200).json(fish);
+    res.status(200).json(lure);
   });
 };
 
@@ -32,7 +32,7 @@ export const updateLure = (req, res) => {
   const { id } = req.params;
   const { typeOfLure } = req.body;
 
-  Fish.update(id, typeOfLure, (err, lure) => {
+  Lure.update(id, typeOfLure, (err, lure) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
@@ -43,11 +43,11 @@ export const updateLure = (req, res) => {
   });
 };
 
-// Delete a fish
+// Delete a lure
 export const deleteLure = (req, res) => {
   const { id } = req.params;
 
-  Fish.delete(id, (err) => {
+  Lure.delete(id, (err) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
