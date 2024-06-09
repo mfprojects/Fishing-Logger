@@ -9,9 +9,7 @@ import fishingTripRoutes from './routes/fishingTripRoutes.mjs';
 import fishRoutes from './routes/fishRoutes.mjs';
 import lureRoutes from './routes/lureRoutes.mjs';
 
-import './db/sqlite.mjs';
-
-// Import the database setup
+// Import the whole database setup
 import './db/sqlite.mjs';
 
 
@@ -28,7 +26,7 @@ if (!fs.existsSync(uploadsDir)) {
 const app = express();
 app.use(bodyParser.json());
 
-// Configure CORS to allow requests from your frontend
+// Configure CORS to allow requests from frontend
 const corsOptions = {
   origin: 'http://localhost:3000', // Allow requests from this origin
   optionsSuccessStatus: 200,

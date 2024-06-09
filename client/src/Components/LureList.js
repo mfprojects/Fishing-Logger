@@ -38,7 +38,7 @@ const LureList = ({ onLureAdded }) => {
         Show Lures
       </Button>
       {error && <Typography color="error">{error}</Typography>}
-      <Paper elevation={3} sx={{ marginTop: 2, padding: 2, width: '100%' }}>
+      <Paper elevation={1} sx={{ marginTop: 2, marginBottom: 2, padding: 2, width: '100%'}}>
         <Grid container spacing={2}>
           {lures.map((lure) => (
             <Grid item xs={12} sm={6} key={lure.id}>
@@ -47,7 +47,8 @@ const LureList = ({ onLureAdded }) => {
                 <img
                   src={`http://localhost:5000/${lure.lureImagePath}`}
                   alt={lure.typeOfLure}
-                  width="200"
+                  width="250"
+                  height="175"
                   style={{ marginBottom: '10px' }}
                 />
                 <Button variant="contained" color="secondary" onClick={() => deleteLure(lure.id)}>

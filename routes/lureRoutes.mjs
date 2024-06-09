@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
     },
   });
   
-  const upload = multer({ storage: storage });
+const upload = multer({ storage: storage });
 
 // Route to handle lure creation with image upload
 router.post('/lures', upload.single('lureImage'), createLure);

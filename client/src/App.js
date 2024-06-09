@@ -3,8 +3,10 @@ import { AppBar, Toolbar, Typography, Grid, Container, Paper, Box, IconButton } 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import './App.css';
-import LureForm from './LureForm';
-import LureList from './LureList';
+import LureForm from './Components/LureForm';
+import LureList from './Components/LureList';
+import FishForm from './Components/FishForm';
+import FishList from './Components/FishList';
 
 
 const theme = createTheme({
@@ -27,6 +29,12 @@ function App() {
   const handleLureAdded = () => {
     setRefresh((prev) => !prev);
   };
+
+    //Refresher når ny Fish legges til for å vise i listen.
+    const [refreshFish, setRefreshFish] = useState(false);
+    const handleFishAdded = () => {
+      setRefreshFish((prev) => !prev);
+    };
   
   return (
     <ThemeProvider theme={theme}>
@@ -49,13 +57,22 @@ function App() {
                 Welcome to FishApp
               </Typography>
               <Typography variant="body1" paragraph>
-                Start by adding a lure
+                Start by adding a fish
               </Typography>
             </Box>
           </Paper>
         </Container>
 
-        <Container style={{ marginTop: '20px' }}>
+        <Container style={{ paddingTop: '0px' }}>
+          <Paper elevation={3}>
+          <Box>
+          <FishForm onFishAdded={handleFishAdded} />
+          <FishList refreshFish={refreshFish} />
+          </Box>
+          </Paper>
+        </Container>
+
+        <Container style={{ paddingTop: '0px' }}>
           <Paper elevation={3}>
           <Box>
           <LureForm onLureAdded={handleLureAdded} />

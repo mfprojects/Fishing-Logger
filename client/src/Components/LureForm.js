@@ -1,6 +1,11 @@
+//Imports
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 
+//Variables
+const endpoint = 'http://localhost:5000/api/lures';
+
+//The form
 const LureForm = ({ onLureAdded }) => {
   const [name, setName] = useState('');
   const [file, setFile] = useState(null);
@@ -14,7 +19,7 @@ const LureForm = ({ onLureAdded }) => {
     formData.append('lureImage', file);
 
     try {
-      const response = await fetch('http://localhost:5000/api/lures', { // Ensure correct URL
+      const response = await fetch(endpoint, { 
         method: 'POST',
         body: formData,
       });
@@ -23,6 +28,9 @@ const LureForm = ({ onLureAdded }) => {
         const data = await response.json();
         console.log('Lure created:', data); // Debugging log
         onLureAdded();
+        //clear form
+        setName('');
+        setFile(null);
       } else {
         console.error('Failed to create lure:', response.statusText);
       }
@@ -40,7 +48,7 @@ const LureForm = ({ onLureAdded }) => {
   };
 
   return (
-    <Box m={20} component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+    <Box m={10} component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       <Typography variant="h6" sx={{ mt: 5 }}>Create Lure</Typography>
       <TextField 
         label="Enter lure name"

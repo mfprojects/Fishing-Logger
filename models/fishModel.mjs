@@ -1,50 +1,45 @@
 import db from '../db/sqlite.mjs';
 
-class Fish {
-  static create(trip_id, typeOfFish, size, weight, lure_id, callback) {
-    db.run(
-      `INSERT INTO fish (trip_id, typeOfFish, size, weight, lure_id) VALUES (?, ?, ?, ? , ?)`,
-      [type],
-      function (err) {
-        if (err) {
-          return callback(err);
-        }
-        callback(null, { id: this.lastID, trip_id, typeOfFish, size, weight, lure_id });
-      }
-    );
-  }
-
-  static findById(id, callback) {
-    db.get(`SELECT * FROM fish WHERE id = ?`, [id], (err, row) => {
+const Fish = {
+  create: (typeOfFish, size, weight, lure_id, fishImagePath, callback) => {
+    const query = `INSERT INTO fish (typeOfFish, size, weight, lure_id, fishImagePath) VALUES (?, ?, ?, ?, ?)`;
+    db.run(query, [typeOfFish, size, weight, lure_id, fishImagePath], function (err) {
       if (err) {
-        return callback(err);
+        callback(err);
+      } else {
+        callback(null, { id: this.lastID, typeOfFish, size, weight, lure_id, fishImagePath})
       }
-      callback(null, row);
+    });
+  },
+  findById: (id, callback) => {
+    const query = `SELECT * FROM fish WHERE id = ?`;
+    db.get(query, [id], (err, fish) => {
+      callback(err, fish);
+    });
+  },
+  getAll: (callback) => {
+    const query = `SELECT * FROM fish`;
+    db.all(query, [], (err, fish) => {
+      callback(err, fish);
+    });
+  },
+  update: (id, typeOfFish, size, weight, lure_id, fishImagePath, callback) => {
+    const query = `UPDATE fish SET typeOfFish = ?, fishImagePath = ? WHERE id = ?`;
+    db.run(query, [typeOfLure, lureImagePath, id], function (err) {
+      if (err) {
+        callback(err);
+      } else {
+        Lure.findById(id, callback);
+      }
+    });
+  },
+
+  delete: (id, callback) => {
+    const query = `DELETE FROM fish WHERE id = ?`;
+    db.run(query, [id], (err) => {
+      callback(err);
     });
   }
-
-  static update(id, trip_id, typeOfFish, size, weight, lure_id, callback) {
-    db.run(
-      `UPDATE fish SET trip_id = ?, type = ?, size = ?, weight = ?, lure_id = ? WHERE id = ?`,
-      [trip_id, typeOfFish, size, weight, lure_id, id],
-      function (err) {
-        if (err) {
-          return callback(err);
-        }
-        callback(null, { id, trip_id, typeOfFish, size, weight, lure_id });
-      }
-    );
-  }
-
-  static delete(id, callback) {
-    db.run(`DELETE FROM fish WHERE id = ?`, [id], function (err) {
-      if (err) {
-        return callback(err);
-      }
-      callback(null);
-    });
-  }
-  // Additional CRUD methods as needed
-}
+};
 
 export default Fish;
