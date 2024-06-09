@@ -12,7 +12,7 @@ const db = new sqlite3.Database(join(__dirname, 'my-database.db'), (err) => {
     console.error('Failed to connect to the database:', err);
   } else {
     console.log('Connected to the SQLite database');
-    // Example to create tables if they don't exist
+    // Create tables if they don't exist
     db.serialize(() => {
       db.run(`CREATE TABLE IF NOT EXISTS user (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -43,7 +43,8 @@ const db = new sqlite3.Database(join(__dirname, 'my-database.db'), (err) => {
 
       db.run(`CREATE TABLE IF NOT EXISTS lure (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        typeOfLure TEXT
+        typeOfLure TEXT,
+        lureImagePath TEXT
       )`);
     });
   }

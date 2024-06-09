@@ -1,23 +1,28 @@
 import React, { useState } from 'react';
 
-const LureForm = () => {
+const LureForm = ({onLureAdded}) => {
   const [name, setName] = useState('');
+  const [file, setFile]= useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Submitting:', name); // Debugging log
+   
+    const formData = new FormData();
+    formData.append('typeOfLure', name);
+    formData.append('lureImage', file);
+   
+   
     try {
       const response = await fetch('http://localhost:5000/api/lures', { // Ensure correct URL
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ typeOfLure: name }), // Correct body structure
+        body: formData,
       });
       console.log('Response:', response); // Debugging log
       if (response.ok) {
         const data = await response.json();
         console.log('Lure created:', data); // Debugging log
+        onLureAdded();
       } else {
         console.error('Failed to create lure:', response.statusText);
       }
@@ -34,6 +39,10 @@ const LureForm = () => {
         onChange={(e) => setName(e.target.value)}
         placeholder="Enter lure name"
       />
+      <input
+        type="file"
+        onChange={(e) => setFile(e.target.files[0])}
+        />
       <button type="submit">Submit</button>
     </form>
   );

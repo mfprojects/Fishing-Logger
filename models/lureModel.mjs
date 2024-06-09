@@ -3,13 +3,13 @@
 import db from '../db/sqlite.mjs';
 
 const Lure = {
-  create: (typeOfLure, callback) => {
-    const query = `INSERT INTO lure (typeOfLure) VALUES (?)`;
-    db.run(query, [typeOfLure], function (err) {
+  create: (typeOfLure, lureImagePath, callback) => {
+    const query = `INSERT INTO lure (typeOfLure, lureImagePath) VALUES (?, ?)`;
+    db.run(query, [typeOfLure, lureImagePath], function (err) {
       if (err) {
         callback(err);
       } else {
-        callback(null, { id: this.lastID, typeOfLure });
+        callback(null, { id: this.lastID, typeOfLure, lureImagePath });
       }
     });
   },
@@ -19,9 +19,15 @@ const Lure = {
       callback(err, lure);
     });
   },
-  update: (id, typeOfLure, callback) => {
-    const query = `UPDATE lure SET typeOfLure = ? WHERE id = ?`;
-    db.run(query, [typeOfLure, id], function (err) {
+  getAll: (callback) => {
+    const query = `SELECT * FROM lure`;
+    db.all(query, [], (err, lures) => {
+      callback(err, lures);
+    });
+  },
+  update: (id, typeOfLure, lureImagePath, callback) => {
+    const query = `UPDATE lure SET typeOfLure = ?, lureImagePath = ? WHERE id = ?`;
+    db.run(query, [typeOfLure, lureImagePath, id], function (err) {
       if (err) {
         callback(err);
       } else {

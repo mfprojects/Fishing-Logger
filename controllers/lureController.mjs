@@ -3,15 +3,28 @@ import Lure from '../models/lureModel.mjs';
 // Create a new lure
 export const createLure = (req, res) => {
   const { typeOfLure } = req.body;
-  console.log('Received request to create lure:', typeOfLure); // Debugging log
+  const lureImagePath = req.file ? `uploads/${req.file.filename}` : ''; // Use relative path
 
-  Lure.create(typeOfLure, (err, lure) => {
+  console.log('File:', req.file); // Debugging log
+  console.log('Lure Image Path:', lureImagePath); // Debugging log
+
+  Lure.create(typeOfLure, lureImagePath, (err, lure) => {
     if (err) {
-      console.error('Failed to create lure:', err); // Debugging log
-      return res.status(500).json({ error: err.message });
+      res.status(500).json({ error: err.message });
+    } else {
+      res.status(201).json(lure);
     }
-    console.log('Lure created:', lure); // Debugging log
-    res.status(201).json(lure);
+  });
+};
+
+// Get all lures
+export const getLures = (req, res) => {
+  Lure.getAll((err, lures) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.json(lures);
+    }
   });
 };
 
@@ -34,13 +47,14 @@ export const getLureById = (req, res) => {
 export const updateLure = (req, res) => {
   const { id } = req.params;
   const { typeOfLure } = req.body;
+  const lureImagePath = req.file ? req.file.path : null;
 
-  Lure.update(id, typeOfLure, (err, lure) => {
+  Lure.update(id, typeOfLure, lureImagePath, (err, lure) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
     if (!lure) {
-      return res.status(404).json({ error: 'lure not found' });
+      return res.status(404).json({ error: 'Lure not found' });
     }
     res.status(200).json(lure);
   });
@@ -58,6 +72,11 @@ export const deleteLure = (req, res) => {
   });
 };
 
+
 export default {
-  createLure
+  createLure,
+  getLures,
+  getLureById,
+  updateLure,
+  deleteLure
 };

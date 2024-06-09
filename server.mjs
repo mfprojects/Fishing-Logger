@@ -1,19 +1,29 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import cors from 'cors';
 import userRoutes from './routes/userRoutes.mjs';
 import fishingTripRoutes from './routes/fishingTripRoutes.mjs';
 import fishRoutes from './routes/fishRoutes.mjs';
 import lureRoutes from './routes/lureRoutes.mjs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import cors from 'cors';
+
 import './db/sqlite.mjs';
 
 // Import the database setup
 import './db/sqlite.mjs';
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Ensure the uploads directory exists
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -31,6 +41,9 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+app.use(express.json());
 app.use('/api', userRoutes);
 app.use('/api', fishingTripRoutes);
 app.use('/api', fishRoutes);
