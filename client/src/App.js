@@ -16,7 +16,7 @@ function App() {
   //Refresher når ny Lure legges til for å vise i listen.
   const [refresh, setRefresh] = useState(false);
   const [refreshFish, setRefreshFish] = useState(false);
-  const [isLureListVisible, setIsLureListVisible] = useState(false);
+
 
   const handleLureAdded = () => {
     setRefresh((prev) => !prev);
