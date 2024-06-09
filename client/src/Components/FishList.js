@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Button, Typography, Paper, List, ListItem, ListItemText, Grid } from '@mui/material';
+import React, { useState} from 'react';
+import { Box, Button, Typography, Paper, ListItem, ListItemText, Grid } from '@mui/material';
 
 const FishList = ({ onFishAdded }) => {
     const [fish, setFish] = useState([]);
@@ -46,7 +46,7 @@ const FishList = ({ onFishAdded }) => {
                 <ListItemText primary={`Type: ${fish.typeOfFish}`} />
                 <ListItemText primary={`Size: ${fish.size}`} />
                 <ListItemText primary={`Weight: ${fish.weight}`} />
-                <ListItemText primary={`Lure used: ${fish.lure_id}`} />
+                <ListItemText primary={`Lure used: ${fish.typeOfLure}`} />
                 <img
                   src={`http://localhost:5000/${fish.fishImagePath}`}
                   alt={fish.typeOfFish}

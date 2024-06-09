@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Grid, Container, Paper, Box, IconButton } from '@mui/material';
+import { AppBar, Toolbar, Typography, Container, Paper, Box, IconButton } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import './App.css';
@@ -7,7 +7,6 @@ import LureForm from './Components/LureForm';
 import LureList from './Components/LureList';
 import FishForm from './Components/FishForm';
 import FishList from './Components/FishList';
-
 
 const theme = createTheme({
   palette: {

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Button, Typography, Paper, List, ListItem, ListItemText, Grid } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Button, Typography, Paper, ListItem, ListItemText, Grid } from '@mui/material';
 
 const LureList = ({ onLureAdded }) => {
   const [lures, setLures] = useState([]);

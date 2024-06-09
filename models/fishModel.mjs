@@ -7,33 +7,32 @@ const Fish = {
       if (err) {
         callback(err);
       } else {
-        callback(null, { id: this.lastID, typeOfFish, size, weight, lure_id, fishImagePath})
+        callback(null, { id: this.lastID, typeOfFish, size, weight, lure_id, fishImagePath })
       }
     });
   },
   findById: (id, callback) => {
-    const query = `SELECT * FROM fish WHERE id = ?`;
+    const query = `SELECT fish.*, lure.typeOfLure FROM fish JOIN lure ON fish.lure_id = lure.id WHERE fish.id = ?`;
     db.get(query, [id], (err, fish) => {
       callback(err, fish);
     });
   },
   getAll: (callback) => {
-    const query = `SELECT * FROM fish`;
+    const query = `SELECT fish.*, lure.typeOfLure FROM fish JOIN lure ON fish.lure_id = lure.id`;
     db.all(query, [], (err, fish) => {
       callback(err, fish);
     });
   },
   update: (id, typeOfFish, size, weight, lure_id, fishImagePath, callback) => {
-    const query = `UPDATE fish SET typeOfFish = ?, fishImagePath = ? WHERE id = ?`;
-    db.run(query, [typeOfLure, lureImagePath, id], function (err) {
+    const query = `UPDATE fish SET typeOfFish = ?, size = ?, weight = ?, lure_id = ?, fishImagePath = ? WHERE id = ?`;
+    db.run(query, [typeOfFish, size, weight, lure_id, fishImagePath, id], function (err) {
       if (err) {
         callback(err);
       } else {
-        Lure.findById(id, callback);
+        Fish.findById(id, callback);
       }
     });
   },
-
   delete: (id, callback) => {
     const query = `DELETE FROM fish WHERE id = ?`;
     db.run(query, [id], (err) => {

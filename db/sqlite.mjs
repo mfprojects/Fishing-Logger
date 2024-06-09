@@ -37,6 +37,7 @@ const db = new sqlite3.Database(join(__dirname, 'my-database.db'), (err) => {
         size REAL,
         weight REAL,
         lure_id INTEGER,
+        date DATE,
         fishImagePath TEXT,
         FOREIGN KEY(trip_id) REFERENCES fishing_trip(id),
         FOREIGN KEY(lure_id) REFERENCES lure(id)

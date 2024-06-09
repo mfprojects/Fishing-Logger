@@ -46,9 +46,11 @@ export const getFishById = (req, res) => {
 // Update a fish
 export const updateFish = (req, res) => {
   const { id } = req.params;
-  const { typeOfFish, size, weight, lure_id } = req.body;
+  const { typeOfFish, size, weight, lure_id} = req.body;
 
-  Fish.update(id, typeOfFish, size, weight, lure_id, (err, fish) => {
+  const fishImagePath = req.file ? `uploads/${req.file.filename}` : ''; 
+
+  Fish.update(id, typeOfFish, size, weight, lure_id, fishImagePath, (err, fish) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
