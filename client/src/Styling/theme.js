@@ -6,41 +6,72 @@ const theme = createTheme({
       default: "#F0F0F0",
     },
     primary: {
-      main: "#1E88E5", // A professional dark blue
-      contrastText: "#ffffff", // White text on primary buttons
+      main: "#1E88E5",
+      contrastText: "#ffffff",
     },
     secondary: {
-      main: "#D32F2F", // A stronger red for delete buttons
-      contrastText: "#ffffff", // White text on secondary buttons
+      main: "#D32F2F",
+      contrastText: "#ffffff",
     },
     text: {
-      primary: "#333333", // Dark grey for primary text
-      secondary: "#555555", // Medium grey for secondary text
+      primary: "#333333",
+      secondary: "#555555",
     },
     error: {
-      main: "#e57373", // A standard red for errors
+      main: "#e57373",
     },
     warning: {
-      main: "#ffb74d", // A standard orange for warnings
+      main: "#ffb74d",
     },
     info: {
-      main: "#64b5f6", // A standard blue for info
+      main: "#64b5f6",
     },
     success: {
-      main: "#81c784", // A standard green for success
+      main: "#81c784",
     },
   },
   typography: {
     fontFamily: 'Poppins, Arial, sans-serif',
+    h6: {
+      fontWeight: 600,
+    },
+    body1: {
+      fontSize: '1rem',
+    },
   },
   components: {
     MuiButton: {
       styleOverrides: {
-        containedSecondary: {
-          backgroundColor: "#D32F2F",
-          '&:hover': {
-            backgroundColor: "#B71C1C",
-          },
+        root: {
+          fontSize: '1rem',
+          padding: '10px 20px',
+          borderRadius: '8px',
+          textTransform: 'none',
+          boxShadow: '0px 3px 6px rgba(0,0,0,0.16)',
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          fontSize: '1rem',
+          padding: '10px 20px',
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: '12px',
+          boxShadow: '0px 3px 15px rgba(0,0,0,0.1)',
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          boxShadow: 'none',
+          borderBottom: '1px solid #E0E0E0',
         },
       },
     },

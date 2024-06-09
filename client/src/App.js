@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Container, Paper, Box, IconButton, Button, Menu, MenuItem } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Button, Menu, MenuItem, Container, Box } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from './Styling/theme'; // Custom Theme
 import MenuIcon from '@mui/icons-material/Menu';
 import CssBaseline from '@mui/material/CssBaseline';
+import theme from './Styling/theme'; // Custom Theme
 import HomePage from './Components/HomePage';
 import FishPage from './Components/FishPage';
 import LurePage from './Components/LurePage';
+import Footer from './Components/Footer'; // Ensure correct casing
 
 function App() {
-
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenuClick = (event) => {
@@ -25,32 +25,37 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <div>
-          <AppBar position="static">
-            <Toolbar>
-              <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuClick}>
-                <MenuIcon />
-              </IconButton>
-              <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-                <MenuItem component={Link} to="/" onClick={handleMenuClose}>Home</MenuItem>
-                <MenuItem component={Link} to="/fish" onClick={handleMenuClose}>Fish</MenuItem>
-                <MenuItem component={Link} to="/lures" onClick={handleMenuClose}>Lures</MenuItem>
-              </Menu>
-              <Typography variant="h6" style={{ flexGrow: 1 }}>
-                Fishing App
-              </Typography>
-              <Button color="inherit" component={Link} to="/">Home</Button>
-              <Button color="inherit" component={Link} to="/fish">Fish</Button>
-              <Button color="inherit" component={Link} to="/lures">Lures</Button>
-            </Toolbar>
+        <Box display="flex" flexDirection="column" minHeight="100vh">
+          <AppBar position="static" color="transparent" elevation={0}>
+            <Container>
+              <Toolbar>
+                <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuClick}>
+                  <MenuIcon />
+                </IconButton>
+                <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
+                  <MenuItem component={Link} to="/" onClick={handleMenuClose}>Home</MenuItem>
+                  <MenuItem component={Link} to="/fish" onClick={handleMenuClose}>Fish</MenuItem>
+                  <MenuItem component={Link} to="/lures" onClick={handleMenuClose}>Lures</MenuItem>
+                </Menu>
+                <Typography variant="h6" style={{ flexGrow: 1, fontWeight: 'bold' }}>
+                  Fishing App
+                </Typography>
+                <Button color="primary" component={Link} to="/" sx={{ fontSize: '1rem', margin: '0 10px' }}>Home</Button>
+                <Button color="primary" component={Link} to="/fish" sx={{ fontSize: '1rem', margin: '0 10px' }}>Fish</Button>
+                <Button color="primary" component={Link} to="/lures" sx={{ fontSize: '1rem', margin: '0 10px' }}>Lures</Button>
+              </Toolbar>
+            </Container>
           </AppBar>
 
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/fish" element={<FishPage />} />
-            <Route path="/lures" element={<LurePage />} />
-          </Routes>
-        </div>
+          <Container component="main" sx={{ flexGrow: 1 }}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/fish" element={<FishPage />} />
+              <Route path="/lures" element={<LurePage />} />
+            </Routes>
+          </Container>
+          <Footer />
+        </Box>
       </Router>
     </ThemeProvider>
   );
