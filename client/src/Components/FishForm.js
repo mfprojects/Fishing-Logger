@@ -1,37 +1,35 @@
-//Imports
+// FishForm.js
+
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Box, Typography, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
+import { TextField, Button, Box, Typography, Card, CardContent, CardActions, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { CloudUpload } from '@mui/icons-material';
 import DateTimePickerComponent from './DateTimePickerComponent';
 
-//Variables
 const endpoint = 'http://localhost:5000/api/fish';
 const luresEndpoint = 'http://localhost:5000/api/lures';
 
-//The form
 const FishForm = ({ onFishAdded }) => {
   const [type, setType] = useState('');
   const [size, setSize] = useState('');
   const [weight, setWeight] = useState('');
-  const [lure_id, setLureId] = useState(''); // The lure ID chosen
-  const [lures, setLures] = useState([]); // List of lures
-  const [selectedDateTime, setSelectedDateTime] = useState(new Date()); 
+  const [lure_id, setLureId] = useState('');
+  const [lures, setLures] = useState([]);
+  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
   const [file, setFile] = useState(null);
 
-// Fetch lures when component mounts
-useEffect(() => {
+  useEffect(() => {
     const fetchLures = async () => {
-    try {
+      try {
         const response = await fetch(luresEndpoint);
         const data = await response.json();
         setLures(data);
-    } catch (error) {
+      } catch (error) {
         console.error('Error fetching lures:', error);
-    }
+      }
     };
     fetchLures();
-}, []);
+  }, []);
 
-//Handlers
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Submitting:', type, size, weight, lure_id, selectedDateTime); // Debugging log
@@ -41,7 +39,7 @@ useEffect(() => {
     formData.append('size', size);
     formData.append('weight', weight);
     formData.append('lure_id', lure_id);
-    formData.append('catchDateTime', selectedDateTime.toISOString()); //Converting to string for storing in DB
+    formData.append('catchDateTime', selectedDateTime.toISOString());
     formData.append('fishImage', file);
 
     try {
@@ -54,12 +52,12 @@ useEffect(() => {
         const data = await response.json();
         console.log('Fish created:', data); // Debugging log
         onFishAdded();
-        //clear form
+        // Clear form
         setType('');
         setSize('');
         setWeight('');
         setLureId('');
-        setSelectedDateTime(new Date()); // Resetting to current date/time
+        setSelectedDateTime(new Date());
         setFile(null);
       } else {
         console.error('Failed to create fish:', response.statusText);
@@ -77,71 +75,78 @@ useEffect(() => {
     document.getElementById('fishFileInput').click();
   };
 
-  //Rendering
   return (
-    <Box m={10} component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-      <Typography variant="h6" sx={{ mt: 5 }}>Add a catch</Typography>
-      <TextField 
-        label="Enter Fish type"
-        variant="outlined"
-        value={type}
-        onChange={(e) => setType(e.target.value)}
-        required
-      />
-        <TextField 
-        label="Enter Fish size"
-        variant="outlined"
-        value={size}
-        onChange={(e) => setSize(e.target.value)}
-        required
-      />
-        <TextField 
-        label="Enter Fish weight"
-        variant="outlined"
-        value={weight}
-        onChange={(e) => setWeight(e.target.value)}
-        required
-      />
-        <FormControl variant="outlined" required>
-        <InputLabel id="lure-label">Select Lure</InputLabel>
-        <Select
-          label="Select Lure"
-          labelId="lure-label"
-          id="lure"
-          value={lure_id}
-          onChange={(e) => setLureId(e.target.value)}
-        >
-            
-          {lures.map((lure) => (
-            <MenuItem key={lure.id} value={lure.id}>{lure.typeOfLure}</MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      
-      <div>
-        <DateTimePickerComponent value={selectedDateTime} onChange={setSelectedDateTime} />
-      </div>
-
-      <input
-        type="file"
-        id="fishFileInput"
-        style={{ display: 'none' }}
-        onChange={handleFileChange}
-        accept="image/*"
-        required
-      />
-      <Button sx={{ width: '25%', alignSelf: 'center' }}
-        variant="contained"
-        color="primary"
-        onClick={handleButtonClick}
-      >
-        Choose File
-      </Button>
-      {file && <Typography variant="body2">{file.name}</Typography>}
-      <Button type="submit" variant="contained" color="primary" sx={{ width: '25%', alignSelf: 'center' }}>
-        Submit
-      </Button>
-    </Box>
+    <Card sx={{ maxWidth: 500, margin: 'auto', mt: 10 }}>
+      <CardContent>
+        <Typography variant="h5" component="div" gutterBottom>
+          Add a catch
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+          <TextField 
+            label="Enter Fish type"
+            variant="outlined"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+            required
+            fullWidth
+          />
+          <TextField 
+            label="Enter Fish size"
+            variant="outlined"
+            value={size}
+            onChange={(e) => setSize(e.target.value)}
+            required
+            fullWidth
+          />
+          <TextField 
+            label="Enter Fish weight"
+            variant="outlined"
+            value={weight}
+            onChange={(e) => setWeight(e.target.value)}
+            required
+            fullWidth
+          />
+          <FormControl variant="outlined" required fullWidth>
+            <InputLabel id="lure-label">Select Lure</InputLabel>
+            <Select
+              label="Select Lure"
+              labelId="lure-label"
+              id="lure"
+              value={lure_id}
+              onChange={(e) => setLureId(e.target.value)}
+            >
+              {lures.map((lure) => (
+                <MenuItem key={lure.id} value={lure.id}>{lure.typeOfLure}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <div>
+            <DateTimePickerComponent value={selectedDateTime} onChange={setSelectedDateTime} />
+          </div>
+          <input
+            type="file"
+            id="fishFileInput"
+            style={{ display: 'none' }}
+            onChange={handleFileChange}
+            accept="image/*"
+            required
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleButtonClick}
+            startIcon={<CloudUpload />}
+            fullWidth
+          >
+            Choose File
+          </Button>
+          {file && <Typography variant="body2" sx={{ mt: 1 }}>{file.name}</Typography>}
+          <Button type="submit" variant="contained" color="primary">
+            Submit
+          </Button>
+        </Box>
+      </CardContent>
+    </Card>
   );
 };
 

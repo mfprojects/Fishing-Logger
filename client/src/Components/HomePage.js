@@ -10,7 +10,7 @@ const HomePage = () => {
             Welcome to FishApp
           </Typography>
           <Typography variant="body1" paragraph>
-            Start by adding a fish or view your lures.
+            Start by adding a catch under the fish menu or begin registering your lures under the Lures menu.
           </Typography>
         </Box>
       </Paper>

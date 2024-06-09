@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Paper, ListItem, ListItemText, Grid, Button } from '@mui/material';
+import { Box, Typography, Paper, ListItem, ListItemText, Card, CardContent, CardMedia, Grid, Button } from '@mui/material';
 
 const FishList = ({ refreshFish, isDataVisible }) => {
   const [fish, setFish] = useState([]);
@@ -46,23 +46,26 @@ const FishList = ({ refreshFish, isDataVisible }) => {
           <Grid container spacing={2}>
             {fish.map((fish) => (
               <Grid item xs={12} sm={6} key={fish.id}>
-                <ListItem sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <ListItemText primary={`Type: ${fish.typeOfFish}`} />
-                  <ListItemText primary={`Size: ${fish.size}`} />
-                  <ListItemText primary={`Weight: ${fish.weight}`} />
-                  <ListItemText primary={`Lure used: ${fish.typeOfLure}`} />
-                  <ListItemText primary={`Date caught: ${new Date(fish.catchDateTime).toLocaleString('no-NO')}`} />
-                  <img
-                    src={`http://localhost:5000/${fish.fishImagePath}`}
+                <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%' }}>
+                  <CardMedia
+                    component="img"
+                    image={`http://localhost:5000/${fish.fishImagePath}`}
                     alt={fish.typeOfFish}
-                    width="250"
-                    height="175"
-                    style={{ marginBottom: '10px' }}
-                  />
-                  <Button variant="contained" color="secondary" onClick={() => deleteFish(fish.id)}>
-                    Delete
-                  </Button>
-                </ListItem>
+                    sx={{width: '100%', height: '150px', objectFit: 'contain', marginBottom: '10px'}}
+                    />
+                    <CardContent sx={{ textAlign: 'center', flexGrow: 1 }}>
+                      <Typography variant="h6">{`Type: ${fish.typeOfFish}`}</Typography>
+                      <Typography variant="h6">{`Size: ${fish.size}`}</Typography>
+                      <Typography variant="h6">{`Weight: ${fish.weight}`}</Typography>
+                      <Typography variant="h6">{`Lure used: ${fish.typeOfLure}`}</Typography>
+                      <Typography variant="h6">{`Date caught: ${new Date(fish.catchDateTime).toLocaleString('no-NO')}`}</Typography>
+                    </CardContent>
+                    <Box sx={{ padding: 2}}>
+                      <Button variant='contained' color='secondary' onClick={() => deleteFish(fish.id)}>
+                        Delete
+                      </Button>
+                    </Box>
+                </Card>
               </Grid>
             ))}
           </Grid>

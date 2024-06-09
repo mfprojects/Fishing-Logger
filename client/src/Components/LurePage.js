@@ -1,5 +1,3 @@
-// LurePage.js
-
 import React, { useState } from 'react';
 import { Container, Paper, Box, Typography, Button } from '@mui/material';
 import LureForm from './LureForm';
@@ -19,10 +17,10 @@ const LurePage = () => {
   };
 
   return (
-    <Container maxWidth="md" style={{ marginTop: '20px' }}>
+    <Container maxWidth="lg" style={{ marginTop: '40px' }}>
       <Paper elevation={3}>
         <Box p={3}>
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h4" align='center' gutterBottom>
             Register a Lure
           </Typography>
           <LureForm onLureAdded={handleLureAdded} />

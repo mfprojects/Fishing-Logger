@@ -43,7 +43,7 @@ const LureForm = ({ onLureAdded }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 500, margin: 'auto', mt: 5 }}>
+    <Card sx={{ maxWidth: 500, margin: 'auto', mt: 10 }}>
       <CardContent>
         <Typography variant="h5" component="div" gutterBottom>
           Create Lure

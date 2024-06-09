@@ -17,10 +17,10 @@ const FishPage = () => {
   };
 
   return (
-    <Container maxWidth="md" style={{ marginTop: '20px' }}>
-      <Paper elevation={3}>
+    <Container maxWidth= "lg" style={{ marginTop: '40px' }}>
+      <Paper elevation={2}>
         <Box p={3}>
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h4" align='center' gutterBottom>
             Register a Catch
           </Typography>
           <FishForm onFishAdded={handleFishAdded} />

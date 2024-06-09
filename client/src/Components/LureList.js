@@ -30,10 +30,12 @@ const LureList = ({ refresh, isDataVisible }) => {
         method: 'DELETE',
       });
       if (!response.ok) {
-        throw new Error('Failed to delete lure');
+        const errorData = await response.json();
+        throw new Error(`Failed to delete lure: ${errorData.message}`);
       }
       setLures(lures.filter((lure) => lure.id !== id));
     } catch (error) {
+      console.error('Delete Lure Error:', error);
       setError(error.message);
     }
   };
