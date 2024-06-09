@@ -1,13 +1,13 @@
 import db from '../db/sqlite.mjs';
 
 const Fish = {
-  create: (typeOfFish, size, weight, lure_id, fishImagePath, callback) => {
-    const query = `INSERT INTO fish (typeOfFish, size, weight, lure_id, fishImagePath) VALUES (?, ?, ?, ?, ?)`;
-    db.run(query, [typeOfFish, size, weight, lure_id, fishImagePath], function (err) {
+  create: (typeOfFish, size, weight, lure_id, catchDateTime, fishImagePath, callback) => {
+    const query = `INSERT INTO fish (typeOfFish, size, weight, lure_id, catchDateTime, fishImagePath) VALUES (?, ?, ?, ?, ?, ?)`;
+    db.run(query, [typeOfFish, size, weight, lure_id, catchDateTime, fishImagePath], function (err) {
       if (err) {
         callback(err);
       } else {
-        callback(null, { id: this.lastID, typeOfFish, size, weight, lure_id, fishImagePath })
+        callback(null, { id: this.lastID, typeOfFish, size, weight, lure_id, catchDateTime, fishImagePath })
       }
     });
   },

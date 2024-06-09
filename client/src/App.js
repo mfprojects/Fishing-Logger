@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Container, Paper, Box, IconButton } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './Styling/theme'; //Custom Theme
 import MenuIcon from '@mui/icons-material/Menu';
 import './App.css';
 import LureForm from './Components/LureForm';
@@ -8,32 +9,22 @@ import LureList from './Components/LureList';
 import FishForm from './Components/FishForm';
 import FishList from './Components/FishList';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#1976d2',
-    },
-    secondary: {
-      main: '#dc004e',
-    },
-  },
-  typography: {
-    fontFamily: 'Roboto, Arial, sans-serif',
-  },
-});
+
+
 
 function App() {
   //Refresher når ny Lure legges til for å vise i listen.
   const [refresh, setRefresh] = useState(false);
+  const [refreshFish, setRefreshFish] = useState(false);
+  const [isLureListVisible, setIsLureListVisible] = useState(false);
+
   const handleLureAdded = () => {
     setRefresh((prev) => !prev);
   };
 
-    //Refresher når ny Fish legges til for å vise i listen.
-    const [refreshFish, setRefreshFish] = useState(false);
-    const handleFishAdded = () => {
-      setRefreshFish((prev) => !prev);
-    };
+  const handleFishAdded = () => {
+    setRefreshFish((prev) => !prev);
+  };
   
   return (
     <ThemeProvider theme={theme}>

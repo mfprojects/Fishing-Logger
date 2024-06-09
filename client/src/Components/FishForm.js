@@ -14,6 +14,7 @@ const FishForm = ({ onFishAdded }) => {
   const [weight, setWeight] = useState('');
   const [lure_id, setLureId] = useState(''); // The lure ID chosen
   const [lures, setLures] = useState([]); // List of lures
+  const [selectedDateTime, setSelectedDateTime] = useState(new Date()); 
   const [file, setFile] = useState(null);
 
 // Fetch lures when component mounts
@@ -33,13 +34,14 @@ useEffect(() => {
 //Handlers
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Submitting:', type, size, weight, lure_id); // Debugging log
+    console.log('Submitting:', type, size, weight, lure_id, selectedDateTime); // Debugging log
 
     const formData = new FormData();
     formData.append('typeOfFish', type);
     formData.append('size', size);
     formData.append('weight', weight);
     formData.append('lure_id', lure_id);
+    formData.append('catchDateTime', selectedDateTime.toISOString()); //Converting to string for storing in DB
     formData.append('fishImage', file);
 
     try {
@@ -57,6 +59,7 @@ useEffect(() => {
         setSize('');
         setWeight('');
         setLureId('');
+        setSelectedDateTime(new Date()); // Resetting to current date/time
         setFile(null);
       } else {
         console.error('Failed to create fish:', response.statusText);
@@ -74,21 +77,10 @@ useEffect(() => {
     document.getElementById('fishFileInput').click();
   };
 
-  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
-
-  useEffect(() => {
-    // Prefill with the current date and time
-    setSelectedDateTime(new Date());
-  }, []);
-
-  const handleDateTimeChange = (newValue) => {
-    setSelectedDateTime(newValue);
-  };
-
   //Rendering
   return (
     <Box m={10} component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-      <Typography variant="h6" sx={{ mt: 5 }}>Create Fish</Typography>
+      <Typography variant="h6" sx={{ mt: 5 }}>Add a catch</Typography>
       <TextField 
         label="Enter Fish type"
         variant="outlined"
@@ -113,11 +105,11 @@ useEffect(() => {
         <FormControl variant="outlined" required>
         <InputLabel id="lure-label">Select Lure</InputLabel>
         <Select
+          label="Select Lure"
           labelId="lure-label"
           id="lure"
           value={lure_id}
           onChange={(e) => setLureId(e.target.value)}
-          label="Select Lure"
         >
             
           {lures.map((lure) => (
@@ -125,8 +117,9 @@ useEffect(() => {
           ))}
         </Select>
       </FormControl>
+      
       <div>
-        <DateTimePickerComponent value={selectedDateTime} onChange={handleDateTimeChange} />
+        <DateTimePickerComponent value={selectedDateTime} onChange={setSelectedDateTime} />
       </div>
 
       <input

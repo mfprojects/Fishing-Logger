@@ -2,13 +2,14 @@ import Fish from '../models/fishModel.mjs';
 
 // Create a new fish
 export const createFish = (req, res) => {
-  const { typeOfFish, size, weight, lure_id} = req.body;
+  const { typeOfFish, size, weight, lure_id, catchDateTime} = req.body;
   const fishImagePath = req.file ? `uploads/${req.file.filename}` : ''; // Use relative path
 
+  console.log('DateTime:', req.body.catchDateTime); // Debugging log
   console.log('File:', req.file); // Debugging log
   console.log('Fish Image Path:', fishImagePath); // Debugging log
 
-  Fish.create(typeOfFish, size, weight, lure_id, fishImagePath, (err, fish) => {
+  Fish.create(typeOfFish, size, weight, lure_id, catchDateTime, fishImagePath, (err, fish) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     } else { //No need for else but looks more informative imo
