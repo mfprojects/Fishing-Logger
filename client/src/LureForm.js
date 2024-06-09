@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
+import { TextField, Button, Box, Typography } from '@mui/material';
 
-const LureForm = ({onLureAdded}) => {
+const LureForm = ({ onLureAdded }) => {
   const [name, setName] = useState('');
-  const [file, setFile]= useState(null);
+  const [file, setFile] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Submitting:', name); // Debugging log
-   
+
     const formData = new FormData();
     formData.append('typeOfLure', name);
     formData.append('lureImage', file);
-   
-   
+
     try {
       const response = await fetch('http://localhost:5000/api/lures', { // Ensure correct URL
         method: 'POST',
@@ -31,20 +31,44 @@ const LureForm = ({onLureAdded}) => {
     }
   };
 
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  const handleButtonClick = () => {
+    document.getElementById('fileInput').click();
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
+    <Box m={20} component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+      <Typography variant="h6" sx={{ mt: 5 }}>Create Lure</Typography>
+      <TextField 
+        label="Enter lure name"
+        variant="outlined"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        placeholder="Enter lure name"
+        required
       />
       <input
         type="file"
-        onChange={(e) => setFile(e.target.files[0])}
-        />
-      <button type="submit">Submit</button>
-    </form>
+        id="fileInput"
+        style={{ display: 'none' }}
+        onChange={handleFileChange}
+        accept="image/*"
+        required
+      />
+      <Button sx={{ width: '25%', alignSelf: 'center' }}
+        variant="contained"
+        color="primary"
+        onClick={handleButtonClick}
+      >
+        Choose File
+      </Button>
+      {file && <Typography variant="body2">{file.name}</Typography>}
+      <Button type="submit" variant="contained" color="primary" sx={{ width: '25%', alignSelf: 'center' }}>
+        Submit
+      </Button>
+    </Box>
   );
 };
 

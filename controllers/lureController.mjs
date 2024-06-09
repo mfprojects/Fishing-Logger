@@ -68,7 +68,7 @@ export const deleteLure = (req, res) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
-    res.status(204).json({ message: 'Lure deleted' });
+    res.status(200).json({ message: 'Lure deleted' }); //Changed from 204 to 200 with message
   });
 };
 
