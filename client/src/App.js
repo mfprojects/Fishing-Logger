@@ -1,77 +1,57 @@
-import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Container, Paper, Box, IconButton } from '@mui/material';
+import React, {useState} from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { AppBar, Toolbar, Typography, Container, Paper, Box, IconButton, Button, Menu, MenuItem } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from './Styling/theme'; //Custom Theme
+import theme from './Styling/theme'; // Custom Theme
 import MenuIcon from '@mui/icons-material/Menu';
-import './App.css';
-import LureForm from './Components/LureForm';
-import LureList from './Components/LureList';
-import FishForm from './Components/FishForm';
-import FishList from './Components/FishList';
-
-
-
+import CssBaseline from '@mui/material/CssBaseline';
+import HomePage from './Components/HomePage';
+import FishPage from './Components/FishPage';
+import LurePage from './Components/LurePage';
 
 function App() {
-  //Refresher når ny Lure legges til for å vise i listen.
-  const [refresh, setRefresh] = useState(false);
-  const [refreshFish, setRefreshFish] = useState(false);
 
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleLureAdded = () => {
-    setRefresh((prev) => !prev);
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  const handleFishAdded = () => {
-    setRefreshFish((prev) => !prev);
+  const handleMenuClose = () => {
+    setAnchorEl(null);
   };
-  
+
   return (
     <ThemeProvider theme={theme}>
-      <div>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton edge="start" color="inherit" aria-label="menu">
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6">
-              Fishing App
-            </Typography>
-          </Toolbar>
-        </AppBar>
-
-        <Container maxWidth="md" style={{ marginTop: '20px' }}>
-          <Paper elevation={3}>
-            <Box p={3}>
-              <Typography variant="h4" gutterBottom>
-                Welcome to FishApp
+      <CssBaseline />
+      <Router>
+        <div>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuClick}>
+                <MenuIcon />
+              </IconButton>
+              <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
+                <MenuItem component={Link} to="/" onClick={handleMenuClose}>Home</MenuItem>
+                <MenuItem component={Link} to="/fish" onClick={handleMenuClose}>Fish</MenuItem>
+                <MenuItem component={Link} to="/lures" onClick={handleMenuClose}>Lures</MenuItem>
+              </Menu>
+              <Typography variant="h6" style={{ flexGrow: 1 }}>
+                Fishing App
               </Typography>
-              <Typography variant="body1" paragraph>
-                Start by adding a fish
-              </Typography>
-            </Box>
-          </Paper>
-        </Container>
+              <Button color="inherit" component={Link} to="/">Home</Button>
+              <Button color="inherit" component={Link} to="/fish">Fish</Button>
+              <Button color="inherit" component={Link} to="/lures">Lures</Button>
+            </Toolbar>
+          </AppBar>
 
-        <Container style={{ paddingTop: '0px' }}>
-          <Paper elevation={3}>
-          <Box>
-          <FishForm onFishAdded={handleFishAdded} />
-          <FishList refreshFish={refreshFish} />
-          </Box>
-          </Paper>
-        </Container>
-
-        <Container style={{ paddingTop: '0px' }}>
-          <Paper elevation={3}>
-          <Box>
-          <LureForm onLureAdded={handleLureAdded} />
-          <LureList refresh={refresh} />
-          </Box>
-          </Paper>
-        </Container>
-
-      </div>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/fish" element={<FishPage />} />
+            <Route path="/lures" element={<LurePage />} />
+          </Routes>
+        </div>
+      </Router>
     </ThemeProvider>
   );
 }

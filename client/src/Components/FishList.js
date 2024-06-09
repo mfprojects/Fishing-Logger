@@ -1,16 +1,15 @@
-import React, { useEffect, useState} from 'react';
-import { Box, Button, Typography, Paper, ListItem, ListItemText, Grid } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Typography, Paper, ListItem, ListItemText, Grid, Button } from '@mui/material';
 
-const FishList = ({ refreshFish  }) => {
-    const [fish, setFish] = useState([]);
-    const [error, setError] = useState(null);
-    const [isDataVisible, setIsDataVisible] = useState(false);
+const FishList = ({ refreshFish, isDataVisible }) => {
+  const [fish, setFish] = useState([]);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-      if (isDataVisible) {
-        fetchFish();
-      }
-    }, [refreshFish]);
+  useEffect(() => {
+    if (isDataVisible) {
+      fetchFish();
+    }
+  }, [refreshFish, isDataVisible]);
 
   const fetchFish = async () => {
     try {
@@ -20,18 +19,8 @@ const FishList = ({ refreshFish  }) => {
       }
       const data = await response.json();
       setFish(data);
-      setIsDataVisible(true);
     } catch (error) {
       setError(error.message);
-    }
-  };
-
-  const toggleVisibility = () => {
-    if (isDataVisible) {
-      setFish([]);
-      setIsDataVisible(false);
-    } else {
-      fetchFish();
     }
   };
 
@@ -51,9 +40,6 @@ const FishList = ({ refreshFish  }) => {
 
   return (
     <Box m={2} display="flex" flexDirection="column" alignItems="center">
-      <Button variant="contained" color="primary" onClick={toggleVisibility} sx={{ mb: 2 }}>
-        {isDataVisible ? 'Hide Fish' : 'Show Fish'}
-      </Button>
       {error && <Typography color="error">{error}</Typography>}
       {isDataVisible && (
         <Paper elevation={1} sx={{ marginTop: 2, marginBottom: 2, padding: 2, width: '100%' }}>
