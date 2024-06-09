@@ -29,7 +29,7 @@ const LurePage = () => {
               variant="contained"
               color="primary"
               onClick={toggleVisibility}
-              sx={{ mt: 10 }}
+              sx={{ mt: 2 }}
             >
               {isDataVisible ? 'Hide Lures' : 'Show Lures'}
             </Button>

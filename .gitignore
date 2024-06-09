@@ -3,3 +3,4 @@ dist/
 .env
 .DS_Store
 .db\my-database.db
+.my-database.db
