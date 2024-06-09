@@ -75,13 +75,11 @@ const LureForm = ({ onLureAdded }) => {
             Choose File
           </Button>
           {file && <Typography variant="body2" sx={{ mt: 1 }}>{file.name}</Typography>}
+          <Button type="submit" variant="contained" color="primary">
+            Submit
+          </Button>
         </Box>
       </CardContent>
-      <CardActions sx={{ justifyContent: 'center' }}>
-        <Button type="submit" variant="contained" color="secondary">
-          Submit
-        </Button>
-      </CardActions>
     </Card>
   );
 };
