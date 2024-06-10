@@ -27,7 +27,7 @@ function App() {
       <Router>
         <Box display="flex" flexDirection="column" minHeight="100vh">
           <AppBar position="static" color="transparent" elevation={0}>
-            <Container>
+            <Container sx={{ maxWidth: '100%', padding: 0 }}>
               <Toolbar>
                 <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuClick}>
                   <MenuIcon />
@@ -47,13 +47,13 @@ function App() {
             </Container>
           </AppBar>
 
-          <Container component="main" sx={{ flexGrow: 1 }}>
+          <Box component="main" sx={{ flexGrow: 1 }}>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/fish" element={<FishPage />} />
               <Route path="/lures" element={<LurePage />} />
             </Routes>
-          </Container>
+          </Box>
           <Footer />
         </Box>
       </Router>

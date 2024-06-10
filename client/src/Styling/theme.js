@@ -30,6 +30,8 @@ const theme = createTheme({
       main: "#81c784",
     },
   },
+  
+  //Må utarbeide en mer gjennomført fonthåndtering senere
   typography: {
     fontFamily: 'Poppins, Arial, sans-serif',
     h6: {
@@ -39,6 +41,7 @@ const theme = createTheme({
       fontSize: '1rem',
     },
   },
+ 
   components: {
     MuiButton: {
       styleOverrides: {

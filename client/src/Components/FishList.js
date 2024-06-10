@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Paper, ListItem, ListItemText, Card, CardContent, CardMedia, Grid, Button } from '@mui/material';
+import { Box, Typography, Paper, Card, CardContent, CardMedia, Grid, Button } from '@mui/material';
 
 const FishList = ({ refreshFish, isDataVisible }) => {
   const [fish, setFish] = useState([]);
@@ -42,7 +42,7 @@ const FishList = ({ refreshFish, isDataVisible }) => {
     <Box m={2} display="flex" flexDirection="column" alignItems="center">
       {error && <Typography color="error">{error}</Typography>}
       {isDataVisible && (
-        <Paper elevation={1} sx={{ marginTop: 2, marginBottom: 2, padding: 2, width: '100%' }}>
+        <Paper elevation={0} sx={{ marginTop: 2, marginBottom: 2, padding: 2, width: '100%' }}>
           <Grid container spacing={2}>
             {fish.map((fish) => (
               <Grid item xs={12} sm={6} key={fish.id}>
@@ -51,16 +51,31 @@ const FishList = ({ refreshFish, isDataVisible }) => {
                     component="img"
                     image={`http://localhost:5000/${fish.fishImagePath}`}
                     alt={fish.typeOfFish}
-                    sx={{width: '100%', height: '150px', objectFit: 'contain', marginBottom: '10px'}}
+                    sx={{width: '100%', height: '150px', objectFit: 'contain', marginBottom: '1em', marginTop: '2em'}}
                     />
-                    <CardContent sx={{ textAlign: 'center', flexGrow: 1 }}>
-                      <Typography variant="h6">{`Type: ${fish.typeOfFish}`}</Typography>
-                      <Typography variant="h6">{`Size: ${fish.size}`}</Typography>
-                      <Typography variant="h6">{`Weight: ${fish.weight}`}</Typography>
-                      <Typography variant="h6">{`Lure used: ${fish.typeOfLure}`}</Typography>
-                      <Typography variant="h6">{`Date caught: ${new Date(fish.catchDateTime).toLocaleString('no-NO')}`}</Typography>
-                    </CardContent>
-                    <Box sx={{ padding: 2}}>
+                  <CardContent sx={{ textAlign: 'center', flexGrow: 1 }}>
+                    <Typography variant="h6">
+                      <Box component="span" sx={{ fontWeight: 600 }}>{`Type: `}</Box>
+                      <Box component="span" sx={{ fontWeight: 400 }}>{fish.typeOfFish}</Box>
+                    </Typography>
+                    <Typography variant="h6">
+                      <Box component="span" sx={{ fontWeight: 600 }}>{`Size: `}</Box>
+                      <Box component="span" sx={{ fontWeight: 400 }}>{fish.size}</Box>
+                    </Typography>
+                    <Typography variant="h6">
+                      <Box component="span" sx={{ fontWeight: 600 }}>{`Weight: `}</Box>
+                      <Box component="span" sx={{ fontWeight: 400 }}>{fish.weight}</Box>
+                    </Typography>
+                    <Typography variant="h6">
+                      <Box component="span" sx={{ fontWeight: 600 }}>{`Lure used: `}</Box>
+                      <Box component="span" sx={{ fontWeight: 400 }}>{fish.typeOfLure}</Box>
+                    </Typography>
+                    <Typography variant="h6">
+                      <Box component="span" sx={{ fontWeight: 600 }}>{`Date caught: `}</Box>
+                      <Box component="span" sx={{ fontWeight: 400 }}>{new Date(fish.catchDateTime).toLocaleString('no-NO')}</Box>
+                    </Typography>
+                  </CardContent>
+                    <Box sx={{ paddingTop: 2, marginBottom: '2em'}}>
                       <Button variant='contained' color='secondary' onClick={() => deleteFish(fish.id)}>
                         Delete
                       </Button>
