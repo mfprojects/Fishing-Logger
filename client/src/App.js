@@ -1,3 +1,7 @@
+/*TODO: Data skal lagres mer separat i databasen -vær, lokasjon, fisk, fangst etc. Ved registrering av en fangst skal man få mulighet til å velge
+fisk som er lagt inn fra før(slik som med lure). Det gir ikke mening å la brukeren legge til fisk, er jo begrenset hvor mange fuckings fiskearter en kan fange i Norge.
+Dropper å implementere Trip. Kan heller kjøre spørringer som samler fangst fra samme dag, sted etc, så kan man bygge en Trip basert på dette.
+*/
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, IconButton, Button, Menu, MenuItem, Container, Box } from '@mui/material';

@@ -1,3 +1,13 @@
+//TODO:
+/*
+Gjøre om til følgende struktur
+CREATE TABLE IF NOT EXISTS fish 
+CREATE TABLE IF NOT EXISTS catch
+CREATE TABLE IF NOT EXISTS weather
+CREATE TABLE IF NOT EXISTS location
+CREATE TABLE IF NOT EXISTS lure, denne er jo grei da
+Indeksere databasen?
+*/
 import sqlite3 from 'sqlite3';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
