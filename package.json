@@ -7,10 +7,11 @@
     "start": "node server.mjs",
     "server": "nodemon server.mjs",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "predev": "node ensureDirectories.mjs"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mikkel",
   "license": "ISC",
   "description": "",
   "dependencies": {
