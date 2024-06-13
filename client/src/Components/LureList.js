@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Paper, Card, CardContent, CardMedia, Grid, Button } from '@mui/material';
+import { Box, Typography, Paper, Grid } from '@mui/material';
+import StyledCard from './StyledCard';
 
 const LureList = ({ refresh, isDataVisible }) => {
   const [lures, setLures] = useState([]);
@@ -47,23 +48,15 @@ const LureList = ({ refresh, isDataVisible }) => {
         <Paper elevation={0} sx={{ marginTop: 2, marginBottom: 2, padding: 2, width: '100%' }}>
           <Grid container spacing={2}>
             {lures.map((lure) => (
-              <Grid item xs={12} sm={4} key={lure.id}>
-                <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%' }}>
-                  <CardMedia
-                    component="img"
-                    image={`http://localhost:5000/${lure.lureImagePath}`}
-                    alt={lure.typeOfLure}
-                    sx={{ width: '100%', height: '150px', objectFit: 'contain', marginBottom: '10px' }}
-                  />
-                  <CardContent sx={{ textAlign: 'center', flexGrow: 1 }}>
+              <Grid item xs={12} sm={6} md={4} lg={3} key={lure.id}>
+                <StyledCard
+                  image={`http://localhost:5000/${lure.lureImagePath}`}
+                  alt={lure.typeOfLure}
+                  details={
                     <Typography variant="h6">{`Type: ${lure.typeOfLure}`}</Typography>
-                  </CardContent>
-                  <Box sx={{ padding: 2 }}>
-                    <Button variant="contained" color="secondary" onClick={() => deleteLure(lure.id)}>
-                      Delete
-                    </Button>
-                  </Box>
-                </Card>
+                  }
+                  onDelete={() => deleteLure(lure.id)}
+                />
               </Grid>
             ))}
           </Grid>

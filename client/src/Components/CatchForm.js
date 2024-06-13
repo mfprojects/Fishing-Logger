@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Slider, Box, Typography, Card, CardContent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { CloudUpload } from '@mui/icons-material';
 import DateTimePickerComponent from './DateTimePickerComponent';
+import LeafletMap from './LeafletMap';
 
 const endpoint = 'http://localhost:5000/api/catch';
 const fishEndpoint = 'http://localhost:5000/api/fish';
@@ -83,8 +84,8 @@ const CatchForm = ({ onCatchAdded }) => {
         onCatchAdded();
         // Clear form
         setFishId('');
-        setSize('');
-        setWeight('');
+        setSize(1);
+        setWeight(1);
         setLureId('');
         setSelectedDateTime(new Date());
         setFile(null);
@@ -98,13 +99,13 @@ const CatchForm = ({ onCatchAdded }) => {
 
   //Update VDOM
   return (
-    <Card sx={{ maxWidth: 500, margin: 'auto', mt: 10 }}>
+    <Card size ="lg" sx={{ margin: 'auto', mt: 10 }}>
       <CardContent>
-        <Typography variant="h5" component="div" gutterBottom>
-          Add a catch
+        <Typography variant="h5" component="div" mb="1em">
+          Fish stats
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-        <FormControl variant="outlined" required fullWidth>
+        <FormControl variant="outlined" required>
             <InputLabel id="fish-label">Select Fish</InputLabel>
             <Select
               label="Select Fish"
@@ -120,12 +121,12 @@ const CatchForm = ({ onCatchAdded }) => {
           </FormControl>
 
           <Typography>
-            Size in centimetres: {size}
+            Size: {size}cm
           </Typography>
           <Slider
             defaultValue={1}
             min={1}
-            max={100}
+            max={200}
             aria-label='Default'
             valueLabelDisplay='auto'
             value={size}
@@ -133,7 +134,7 @@ const CatchForm = ({ onCatchAdded }) => {
             required
           />
           <TextField 
-            label="Enter Fish weight"
+            label="Fish weight(grams)"
             variant="outlined"
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
@@ -170,10 +171,12 @@ const CatchForm = ({ onCatchAdded }) => {
             color="primary"
             onClick={handleButtonClick}
             startIcon={<CloudUpload />}
-            fullWidth
           >
             Choose File
           </Button>
+          <Box maxWidth={"100%"} maxHeight={"100%"}>
+          <LeafletMap></LeafletMap>
+          </Box>
           {file && <Typography variant="body2" sx={{ mt: 1 }}>{file.name}</Typography>}
           <Button type="submit" variant="contained" color="primary">
             Submit

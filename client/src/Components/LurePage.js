@@ -18,7 +18,7 @@ const LurePage = () => {
 
   return (
     <Container maxWidth="xl" style={{ marginTop: '40px' }}>
-      <Paper elevation={3}>
+      <Paper elevation={2}>
         <Box p={3}>
           <Typography variant="h4" align='center' gutterBottom>
             Register a Lure

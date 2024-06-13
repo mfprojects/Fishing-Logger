@@ -17,7 +17,7 @@ const CatchPage = () => {
   };
 
   return (
-    <Container maxWidth= "xl" style={{ marginTop: '40px' }}>
+    <Container maxWidth= "lg" style={{ marginTop: '40px' }}>
       <Paper elevation={2}>
         <Box p={3}>
           <Typography variant="h4" align='center' gutterBottom>
@@ -31,7 +31,7 @@ const CatchPage = () => {
               onClick={toggleVisibility}
               sx={{ mt: 2 }}
             >
-              {isDataVisible ? 'Hide Catch' : 'Show Catch'}
+              {isDataVisible ? 'Hide Catches' : 'Show Catches'}
             </Button>
           </Box>
           <CatchList refreshCatch={refreshCatch} isDataVisible={isDataVisible} />

@@ -5,7 +5,7 @@ import './Waves.css';  // Import the waves.css file
 const HomePage = () => {
   return (
     <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F0F0F0', textAlign: 'center', position: 'relative' }}>
-      <Box sx={{ py: 5 }}>
+      <Box sx={{ py: 5, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '33vh' }}>
         <Typography variant="h3" gutterBottom>
           Welcome to the Fishing App
         </Typography>
@@ -13,6 +13,7 @@ const HomePage = () => {
           Datadriven approach to fishing
         </Typography>
       </Box>
+      
       <Box sx={{ width: '100%', overflow: 'hidden', lineHeight: 0, position: 'absolute', bottom: 0, left: 0 }}>
         <svg
           className="waves"
