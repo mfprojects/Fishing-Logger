@@ -4,9 +4,12 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
+
 import userRoutes from './routes/userRoutes.mjs';
-import catchRoutes from './routes/catchRoutes.mjs';
 import lureRoutes from './routes/lureRoutes.mjs';
+import catchRoutes from './routes/catchRoutes.mjs';
+import fishRoutes from './routes/fishRoutes.mjs';
+
 
 // Import the whole database setup
 import './db/sqlite.mjs';
@@ -42,8 +45,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(express.json());
 app.use('/api', userRoutes);
-app.use('/api', catchRoutes);
 app.use('/api', lureRoutes);
+app.use('/api', fishRoutes);
+app.use('/api', catchRoutes);
 
 // Serve static files from the React app in production
 if (process.env.NODE_ENV === 'production') {

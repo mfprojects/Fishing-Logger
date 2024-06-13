@@ -2,14 +2,14 @@ import CatchRecord from '../models/catchModel.mjs';
 
 // Create a new catch
 export const createCatch = (req, res) => {
-  const { typeOfFish, size, weight, lure_id, catchDateTime } = req.body;
+  const { fish_id, size, weight, lure_id, catchDateTime } = req.body;
   const fishImagePath = req.file ? `uploads/${req.file.filename}` : ''; // Use relative path
 
   console.log('DateTime:', req.body.catchDateTime); // Debugging log
   console.log('File:', req.file); // Debugging log
   console.log('fishImage Path:', fishImagePath); // Debugging log
 
-  CatchRecord.create(typeOfFish, size, weight, lure_id, catchDateTime, fishImagePath, (err, newCatch) => {
+  CatchRecord.create(fish_id, size, weight, lure_id, catchDateTime, fishImagePath, (err, newCatch) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     } else { //No need for else but looks more informative imo
@@ -47,11 +47,11 @@ export const getCatchById = (req, res) => {
 // Update a catch
 export const updateCatch = (req, res) => {
   const { id } = req.params;
-  const { typeOfFish, size, weight, lure_id } = req.body;
+  const { fish_id, size, weight, lure_id } = req.body;
 
   const fishImagePath = req.file ? `uploads/${req.file.filename}` : '';
 
-  CatchRecord.update(id, typeOfFish, size, weight, lure_id, fishImagePath, (err, updatedCatch) => {
+  CatchRecord.update(id, fish_id, size, weight, lure_id, fishImagePath, (err, updatedCatch) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }

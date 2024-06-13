@@ -10,7 +10,7 @@ const DateTimePickerComponent = ({ value, onChange }) => {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DateTimePicker
           ampm={false}
-          renderInput={(props) => <TextField {...props} />}
+          TextField={(props) => <TextField {...props} />}
           label="Date & Time"
           value={value}
           onChange={onChange}

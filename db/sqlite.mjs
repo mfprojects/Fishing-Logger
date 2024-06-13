@@ -47,7 +47,7 @@ const db = new sqlite3.Database(join(__dirname, 'my-database.db'), (err) => {
 
       db.run(`CREATE TABLE IF NOT EXISTS catch (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        fish_id INTEGER,
+        fish_id INTEGER NOT NULL,
         size REAL,
         weight REAL,
         lure_id INTEGER,
@@ -66,16 +66,6 @@ const db = new sqlite3.Database(join(__dirname, 'my-database.db'), (err) => {
         typeOfLure TEXT,
         lureImagePath TEXT
       )`);
-
-      // Prepopulate the fish table
-      const fishNames = ['Salmon', 'Trout', 'Cod', 'Haddock', 'Plaice', 'Pollack', 'Redfish', 'Ling', 'Tusk', 'Halibut', 'Mackerel', 'Saithe', 'Bass', 'Northern Pike'];
-      fishNames.forEach(name => {
-        db.run(`INSERT OR IGNORE INTO fish (typeOfFish) VALUES (?)`, [name], (err) => {
-          if (err) {
-            console.error(`Failed to insert fish ${name}:`, err);
-          }
-          });
-        });
     });
   }
 });

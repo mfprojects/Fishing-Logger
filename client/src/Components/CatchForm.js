@@ -1,27 +1,30 @@
-// FishForm.js
-
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Box, Typography, Card, CardContent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { TextField, Button, Slider, Box, Typography, Card, CardContent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { CloudUpload } from '@mui/icons-material';
 import DateTimePickerComponent from './DateTimePickerComponent';
 
-const endpoint = 'http://localhost:5000/api/fish';
+const endpoint = 'http://localhost:5000/api/catch';
+const fishEndpoint = 'http://localhost:5000/api/fish';
 const luresEndpoint = 'http://localhost:5000/api/lures';
 
+//Define Form
 const CatchForm = ({ onCatchAdded }) => {
-  const [type, setType] = useState('');
-  const [size, setSize] = useState('');
-  const [weight, setWeight] = useState('');
+  const [fish_id, setFishId] = useState('');
+  const [fish, setFish] = useState([]);
+  const [size, setSize] = useState(1);
+  const [weight, setWeight] = useState(1);
   const [lure_id, setLureId] = useState('');
   const [lures, setLures] = useState([]);
   const [selectedDateTime, setSelectedDateTime] = useState(new Date());
   const [file, setFile] = useState(null);
 
+  //Fetch data outside of react for lures
   useEffect(() => {
     const fetchLures = async () => {
       try {
         const response = await fetch(luresEndpoint);
         const data = await response.json();
+        console.log('Lure data:', data); // Debugging log
         setLures(data);
       } catch (error) {
         console.error('Error fetching lures:', error);
@@ -30,12 +33,38 @@ const CatchForm = ({ onCatchAdded }) => {
     fetchLures();
   }, []);
 
+  //Fetch data ouutside of react for fish
+  useEffect(() => {
+    const fetchFish = async () => {
+      try {
+        const response = await fetch(fishEndpoint);
+        const data = await response.json();
+        console.log('Fish data:', data); // Debugging log
+        setFish(data);
+      } catch (error) {
+        console.error('Error fetching fish:', error);
+      }
+    };
+    fetchFish();
+  }, []);
+
+  //Event Handlers begin
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  const handleButtonClick = () => {
+    document.getElementById('fishFileInput').click();
+  };
+  //Event Handlers end
+
+  //Submit Form
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Submitting:', type, size, weight, lure_id, selectedDateTime); // Debugging log
+    console.log('Submitting:', fish_id, size, weight, lure_id, selectedDateTime); // Debugging log
 
     const formData = new FormData();
-    formData.append('typeOfFish', type);
+    formData.append('fish_id', fish_id);
     formData.append('size', size);
     formData.append('weight', weight);
     formData.append('lure_id', lure_id);
@@ -53,7 +82,7 @@ const CatchForm = ({ onCatchAdded }) => {
         console.log('Fish created:', data); // Debugging log
         onCatchAdded();
         // Clear form
-        setType('');
+        setFishId('');
         setSize('');
         setWeight('');
         setLureId('');
@@ -67,14 +96,7 @@ const CatchForm = ({ onCatchAdded }) => {
     }
   };
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-  };
-
-  const handleButtonClick = () => {
-    document.getElementById('fishFileInput').click();
-  };
-
+  //Update VDOM
   return (
     <Card sx={{ maxWidth: 500, margin: 'auto', mt: 10 }}>
       <CardContent>
@@ -82,21 +104,33 @@ const CatchForm = ({ onCatchAdded }) => {
           Add a catch
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-          <TextField 
-            label="Enter Fish type"
-            variant="outlined"
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-            required
-            fullWidth
-          />
-          <TextField 
-            label="Enter Fish size"
-            variant="outlined"
+        <FormControl variant="outlined" required fullWidth>
+            <InputLabel id="fish-label">Select Fish</InputLabel>
+            <Select
+              label="Select Fish"
+              labelId="fish-label"
+              id="fish"
+              value={fish_id}
+              onChange={(e) => setFishId(e.target.value)}
+            >
+              {fish.map((fish) => (
+                <MenuItem key={fish.id} value={fish.id}>{fish.typeOfFish}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <Typography>
+            Size in centimetres: {size}
+          </Typography>
+          <Slider
+            defaultValue={1}
+            min={1}
+            max={100}
+            aria-label='Default'
+            valueLabelDisplay='auto'
             value={size}
             onChange={(e) => setSize(e.target.value)}
             required
-            fullWidth
           />
           <TextField 
             label="Enter Fish weight"

@@ -6,11 +6,13 @@ const theme = createTheme({
       default: "#F0F0F0",
     },
     primary: {
-      main: "#1E88E5",
+      //main: "#1E88E5",
+      main: '#1976d2',
       contrastText: "#ffffff",
     },
     secondary: {
-      main: "#D32F2F",
+      //main: "#D32F2F",
+      main: '#dc004e',
       contrastText: "#ffffff",
     },
     text: {
@@ -33,15 +35,8 @@ const theme = createTheme({
   
   //Må utarbeide en mer gjennomført fonthåndtering senere
   typography: {
-    fontFamily: 'Poppins, Arial, sans-serif',
-    h6: {
-      fontWeight: 600,
-    },
-    body1: {
-      fontSize: '1rem',
-    },
+    fontFamily: 'Poppins, Arial, sans-serif'
   },
- 
   components: {
     MuiButton: {
       styleOverrides: {

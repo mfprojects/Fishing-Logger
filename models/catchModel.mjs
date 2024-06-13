@@ -1,13 +1,13 @@
 import db from '../db/sqlite.mjs';
 
 const CatchRecord = {
-  create: (typeOfFish, size, weight, lure_id, catchDateTime, fishImagePath, callback) => {
-    const query = `INSERT INTO catch (typeOfFish, size, weight, lure_id, catchDateTime, fishImagePath) VALUES (?, ?, ?, ?, ?, ?)`;
-    db.run(query, [typeOfFish, size, weight, lure_id, catchDateTime, fishImagePath], function (err) {
+  create: (fish_id, size, weight, lure_id, catchDateTime, fishImagePath, callback) => {
+    const query = `INSERT INTO catch (fish_id, size, weight, lure_id, catchDateTime, fishImagePath) VALUES (?, ?, ?, ?, ?, ?)`;
+    db.run(query, [fish_id, size, weight, lure_id, catchDateTime, fishImagePath], function (err) {
       if (err) {
         callback(err);
       } else {
-        callback(null, { id: this.lastID, typeOfFish, size, weight, lure_id, catchDateTime, fishImagePath });
+        callback(null, { id: this.lastID, fish_id, size, weight, lure_id, catchDateTime, fishImagePath });
       }
     });
   },
@@ -18,14 +18,17 @@ const CatchRecord = {
     });
   },
   getAll: (callback) => {
-    const query = `SELECT catch.*, lure.typeOfLure FROM catch JOIN lure ON catch.lure_id = lure.id`;
+    const query = `SELECT catch.*, lure.typeOfLure, fish.typeOfFish
+    FROM catch
+    JOIN lure ON catch.lure_id = lure.id
+    JOIN fish ON catch.fish_id = fish.id`;
     db.all(query, [], (err, catchRecords) => {
       callback(err, catchRecords);
     });
   },
-  update: (id, typeOfFish, size, weight, lure_id, fishImagePath, callback) => {
-    const query = `UPDATE catch SET typeOfFish = ?, size = ?, weight = ?, lure_id = ?, fishImagePath = ? WHERE id = ?`;
-    db.run(query, [typeOfFish, size, weight, lure_id, fishImagePath, id], function (err) {
+  update: (id, fish_id, size, weight, lure_id, fishImagePath, callback) => {
+    const query = `UPDATE catch SET fish_id = ?, size = ?, weight = ?, lure_id = ?, fishImagePath = ? WHERE id = ?`;
+    db.run(query, [fish_id, size, weight, lure_id, fishImagePath, id], function (err) {
       if (err) {
         callback(err);
       } else {

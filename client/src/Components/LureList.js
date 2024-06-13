@@ -47,7 +47,7 @@ const LureList = ({ refresh, isDataVisible }) => {
         <Paper elevation={0} sx={{ marginTop: 2, marginBottom: 2, padding: 2, width: '100%' }}>
           <Grid container spacing={2}>
             {lures.map((lure) => (
-              <Grid item xs={12} sm={6} key={lure.id}>
+              <Grid item xs={12} sm={4} key={lure.id}>
                 <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%' }}>
                   <CardMedia
                     component="img"
