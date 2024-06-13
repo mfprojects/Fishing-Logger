@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Container, Paper, Box, Typography, Button } from '@mui/material';
-import FishForm from './FishForm';
-import FishList from './FishList';
+import CatchForm from './CatchForm';
+import CatchList from './CatchList';
 
-const FishPage = () => {
-  const [refreshFish, setRefreshFish] = useState(false);
+const CatchPage = () => {
+  const [refreshCatch, setRefreshCatch] = useState(false);
   const [isDataVisible, setIsDataVisible] = useState(true);
 
-  const handleFishAdded = () => {
-    setRefreshFish((prev) => !prev);
+  const handleCatchAdded = () => {
+    setRefreshCatch((prev) => !prev);
     setIsDataVisible(true);
   };
 
@@ -23,7 +23,7 @@ const FishPage = () => {
           <Typography variant="h4" align='center' gutterBottom>
             Register a Catch
           </Typography>
-          <FishForm onFishAdded={handleFishAdded} />
+          <CatchForm onCatchAdded={handleCatchAdded} />
           <Box m={2} display="flex" flexDirection="column" alignItems="center">
             <Button
               variant="contained"
@@ -31,14 +31,14 @@ const FishPage = () => {
               onClick={toggleVisibility}
               sx={{ mt: 2 }}
             >
-              {isDataVisible ? 'Hide Fish' : 'Show Fish'}
+              {isDataVisible ? 'Hide Catch' : 'Show Catch'}
             </Button>
           </Box>
-          <FishList refreshFish={refreshFish} isDataVisible={isDataVisible} />
+          <CatchList refreshCatch={refreshCatch} isDataVisible={isDataVisible} />
         </Box>
       </Paper>
     </Container>
   );
 };
 
-export default FishPage;
+export default CatchPage;

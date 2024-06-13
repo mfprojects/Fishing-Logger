@@ -1,7 +1,7 @@
 // LureForm.js
 
 import React, { useState } from 'react';
-import { TextField, Button, Box, Typography, Card, CardContent, CardActions, IconButton } from '@mui/material';
+import { TextField, Button, Box, Typography, Card, CardContent } from '@mui/material';
 import { CloudUpload } from '@mui/icons-material';
 
 const endpoint = 'http://localhost:5000/api/lures';
@@ -23,6 +23,7 @@ const LureForm = ({ onLureAdded }) => {
       });
       if (response.ok) {
         const data = await response.json();
+        console.log('Lure created:', data);  // Log the data
         onLureAdded();
         setName('');
         setFile(null);

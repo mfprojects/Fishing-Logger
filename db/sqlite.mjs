@@ -1,11 +1,5 @@
 //TODO:
 /*
-Gjøre om til følgende struktur
-CREATE TABLE IF NOT EXISTS fish 
-CREATE TABLE IF NOT EXISTS catch
-CREATE TABLE IF NOT EXISTS weather
-CREATE TABLE IF NOT EXISTS location
-CREATE TABLE IF NOT EXISTS lure, denne er jo grei da
 Indeksere databasen?
 */
 import sqlite3 from 'sqlite3';
@@ -30,27 +24,41 @@ const db = new sqlite3.Database(join(__dirname, 'my-database.db'), (err) => {
         email TEXT UNIQUE,
         password TEXT
       )`);
-
-      db.run(`CREATE TABLE IF NOT EXISTS fishing_trip (
+      
+      db.run(`CREATE TABLE IF NOT EXISTS weather (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER,
-        date DATE,
-        location TEXT,
-        weather TEXT,
-        FOREIGN KEY(user_id) REFERENCES user(id)
+        temperature REAL,
+        condition TEXT,
+        UNIQUE(temperature, condition)
+      )`);
+
+      db.run(`CREATE TABLE IF NOT EXISTS location (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        latitude REAL,
+        longitude REAL,
+        description TEXT,
+        UNIQUE(latitude, longitude)
       )`);
 
       db.run(`CREATE TABLE IF NOT EXISTS fish (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        trip_id INTEGER,
-        typeOfFish TEXT,
+        typeOfFish TEXT
+      )`);
+
+      db.run(`CREATE TABLE IF NOT EXISTS catch (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        fish_id INTEGER,
         size REAL,
         weight REAL,
         lure_id INTEGER,
         catchDateTime TEXT,
         fishImagePath TEXT,
-        FOREIGN KEY(trip_id) REFERENCES fishing_trip(id),
-        FOREIGN KEY(lure_id) REFERENCES lure(id)
+        weather_id INTEGER,
+        location_id INTEGER,
+        FOREIGN KEY(fish_id) REFERENCES fish(id),
+        FOREIGN KEY(lure_id) REFERENCES lure(id),
+        FOREIGN KEY(weather_id) REFERENCES weather(id),
+        FOREIGN KEY(location_id) REFERENCES location(id)
       )`);
 
       db.run(`CREATE TABLE IF NOT EXISTS lure (
@@ -58,6 +66,16 @@ const db = new sqlite3.Database(join(__dirname, 'my-database.db'), (err) => {
         typeOfLure TEXT,
         lureImagePath TEXT
       )`);
+
+      // Prepopulate the fish table
+      const fishNames = ['Salmon', 'Trout', 'Cod', 'Haddock', 'Plaice', 'Pollack', 'Redfish', 'Ling', 'Tusk', 'Halibut', 'Mackerel', 'Saithe', 'Bass', 'Northern Pike'];
+      fishNames.forEach(name => {
+        db.run(`INSERT OR IGNORE INTO fish (typeOfFish) VALUES (?)`, [name], (err) => {
+          if (err) {
+            console.error(`Failed to insert fish ${name}:`, err);
+          }
+          });
+        });
     });
   }
 });

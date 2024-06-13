@@ -10,9 +10,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './Styling/theme'; // Custom Theme
 import HomePage from './Components/HomePage';
-import FishPage from './Components/FishPage';
+import CatchPage from './Components/CatchPage';
 import LurePage from './Components/LurePage';
-import Footer from './Components/Footer'; // Ensure correct casing
+import Footer from './Components/footer'; // Ensure correct casing
 
 function App() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -38,14 +38,14 @@ function App() {
                 </IconButton>
                 <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
                   <MenuItem component={Link} to="/" onClick={handleMenuClose}>Home</MenuItem>
-                  <MenuItem component={Link} to="/fish" onClick={handleMenuClose}>Fish</MenuItem>
+                  <MenuItem component={Link} to="/catch" onClick={handleMenuClose}>Catch</MenuItem>
                   <MenuItem component={Link} to="/lures" onClick={handleMenuClose}>Lures</MenuItem>
                 </Menu>
                 <Typography variant="h6" style={{ flexGrow: 1, fontWeight: 'bold' }}>
                   Fishing App
                 </Typography>
                 <Button color="primary" component={Link} to="/" sx={{ fontSize: '1rem', margin: '0 10px' }}>Home</Button>
-                <Button color="primary" component={Link} to="/fish" sx={{ fontSize: '1rem', margin: '0 10px' }}>Fish</Button>
+                <Button color="primary" component={Link} to="/catch" sx={{ fontSize: '1rem', margin: '0 10px' }}>Catch</Button>
                 <Button color="primary" component={Link} to="/lures" sx={{ fontSize: '1rem', margin: '0 10px' }}>Lures</Button>
               </Toolbar>
             </Container>
@@ -54,7 +54,7 @@ function App() {
           <Box component="main" sx={{ flexGrow: 1 }}>
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/fish" element={<FishPage />} />
+              <Route path="/catch" element={<CatchPage />} />
               <Route path="/lures" element={<LurePage />} />
             </Routes>
           </Box>

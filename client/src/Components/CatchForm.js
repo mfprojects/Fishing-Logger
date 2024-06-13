@@ -1,14 +1,14 @@
 // FishForm.js
 
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Box, Typography, Card, CardContent, CardActions, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { TextField, Button, Box, Typography, Card, CardContent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { CloudUpload } from '@mui/icons-material';
 import DateTimePickerComponent from './DateTimePickerComponent';
 
 const endpoint = 'http://localhost:5000/api/fish';
 const luresEndpoint = 'http://localhost:5000/api/lures';
 
-const FishForm = ({ onFishAdded }) => {
+const CatchForm = ({ onCatchAdded }) => {
   const [type, setType] = useState('');
   const [size, setSize] = useState('');
   const [weight, setWeight] = useState('');
@@ -51,7 +51,7 @@ const FishForm = ({ onFishAdded }) => {
       if (response.ok) {
         const data = await response.json();
         console.log('Fish created:', data); // Debugging log
-        onFishAdded();
+        onCatchAdded();
         // Clear form
         setType('');
         setSize('');
@@ -60,7 +60,7 @@ const FishForm = ({ onFishAdded }) => {
         setSelectedDateTime(new Date());
         setFile(null);
       } else {
-        console.error('Failed to create fish:', response.statusText);
+        console.error('Failed to create catch:', response.statusText);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -150,4 +150,4 @@ const FishForm = ({ onFishAdded }) => {
   );
 };
 
-export default FishForm;
+export default CatchForm;

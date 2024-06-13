@@ -3,7 +3,7 @@ import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
-import { createFish, getFishById, getFish, updateFish, deleteFish } from '../controllers/fishController.mjs'; // Use named imports
+import { createCatch, getCatchById, getCatch, updateCatch, deleteCatch } from '../controllers/catchController.mjs'; // Use named imports
 
 const router = express.Router();
 
@@ -28,10 +28,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Route to handle fish creation with image upload
-router.post('/fish', upload.single('fishImage'), createFish);
-router.get('/fish', getFish)
-router.get('/fish/:id', getFishById);
-router.put('/fish/:id', upload.single('fishImage'), updateFish);
-router.delete('/fish/:id', deleteFish);
+router.post('/catch', upload.single('fishImage'), createCatch);
+router.get('/catch', getCatch)
+router.get('/catch/:id', getCatchById);
+router.put('/catch/:id', upload.single('fishImage'), updateCatch);
+router.delete('/catch/:id', deleteCatch);
 
 export default router;
