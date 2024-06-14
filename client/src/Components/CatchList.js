@@ -58,6 +58,8 @@ const CatchList = ({ refreshCatch, isDataVisible }) => {
                       <DetailItem label="Weight" value={item.weight} />
                       <DetailItem label="Lure used" value={item.typeOfLure} />
                       <DetailItem label="Date caught" value={new Date(item.catchDateTime).toLocaleString('no-NO')} />
+                      <DetailItem label="Location" value={item.locationName} />
+                      
                     </>
                   }
                   onDelete={() => deleteCatch(item.id)}

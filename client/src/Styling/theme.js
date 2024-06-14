@@ -3,21 +3,22 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     background: {
-      default: "#F0F0F0",
+      default: '#ffefca',
     },
     primary: {
-      //main: "#1E88E5",
-      main: '#1976d2',
-      contrastText: "#ffffff",
+      main: '#007665',
+      contrastText: "#c5cfae",
     },
     secondary: {
-      //main: "#D32F2F",
-      main: '#dc004e',
+      main: '#e57373',
       contrastText: "#ffffff",
     },
     text: {
       primary: "#333333",
       secondary: "#555555",
+    },
+    delete: {
+      main: "#FF4C4C",
     },
     error: {
       main: "#e57373",
@@ -26,7 +27,7 @@ const theme = createTheme({
       main: "#ffb74d",
     },
     info: {
-      main: "#64b5f6",
+      main: "#00bed8",
     },
     success: {
       main: "#81c784",
@@ -35,7 +36,16 @@ const theme = createTheme({
   
   //Må utarbeide en mer gjennomført fonthåndtering senere
   typography: {
-    fontFamily: 'Poppins, Arial, sans-serif'
+    fontFamily: 'Poppins, Arial, sans-serif',
+    h3: {
+      color: '#007665'
+    },
+    h4: {
+      color: '#007665'
+    },
+    h6: {
+      color: '#ff8c5a'
+    }
   },
   components: {
     MuiButton: {
@@ -73,7 +83,17 @@ const theme = createTheme({
         },
       },
     },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#F5FFFA',
+        },
+      },
+    },
   },
+    gradients: {
+      frontPage: 'linear-gradient(0deg, rgba(119,227,239,1) 0%, rgba(255,238,203,1) 100%)',
+    },
 });
 
 export default theme;

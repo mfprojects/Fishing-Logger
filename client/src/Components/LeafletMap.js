@@ -14,28 +14,45 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-const LeafletMap = () => {
-  const [markerPosition, setMarkerPosition] = useState([51.505, -0.09]);
-  const [mapCenter, setMapCenter] = useState([51.505, -0.09]);
+const LeafletMap = ({ onPositionChange }) => {
+  const [markerPosition, setMarkerPosition] = useState([0, 0]);
+  const [mapCenter, setMapCenter] = useState([0, 0]);
+  const [locationName, setLocationName] = useState('');
 
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        async (position) => {
           const { latitude, longitude } = position.coords;
           setMarkerPosition([latitude, longitude]);
           setMapCenter([latitude, longitude]);
+          const locationData = await getLocationName(latitude, longitude);
+          setLocationName(locationData.display_name);
+          onPositionChange([latitude, longitude, locationData.display_name]); // Update parent component with location name
         },
         (error) => {
           console.error("Error getting user location:", error);
         }
       );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
     }
-  }, []);
+  }, []); // Empty dependency array ensures this runs only once when the component mounts
+
+  const getLocationName = async (lat, lon) => {
+    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&addressdetails=1`);
+    const data = await response.json();
+    return data;
+  };
 
   const MapClickHandler = () => {
-    useMapEvent('click', (event) => {
-      setMarkerPosition([event.latlng.lat, event.latlng.lng]);
+    useMapEvent('click', async (event) => {
+      const newMarkerPosition = [event.latlng.lat, event.latlng.lng];
+      setMarkerPosition(newMarkerPosition);
+      setMapCenter(newMarkerPosition);
+      const locationData = await getLocationName(event.latlng.lat, event.latlng.lng);
+      setLocationName(locationData.display_name);
+      onPositionChange([...newMarkerPosition, locationData.display_name]); // Update parent component with location name
     });
     return null;
   };
@@ -60,7 +77,7 @@ const LeafletMap = () => {
         />
         <Marker position={markerPosition}>
           <Popup>
-            Your location
+            {locationName ? locationName : `Latitude: ${markerPosition[0]}, Longitude: ${markerPosition[1]}`}
           </Popup>
         </Marker>
         <MapClickHandler />

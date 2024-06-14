@@ -36,7 +36,7 @@ const StyledCard = ({ image, alt, details, onDelete }) => {
         {details}
       </CardContent>
       <Box sx={{ display: 'flex', paddingTop: 2, justifyContent: 'center', marginBottom: '1em' }}>
-        <Button size='small' variant='contained' color='secondary' onClick={onDelete}>
+        <Button size='small' variant='contained' color='delete' onClick={onDelete}>
           Delete
         </Button>
       </Box>

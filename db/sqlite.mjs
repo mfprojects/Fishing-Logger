@@ -28,16 +28,14 @@ const db = new sqlite3.Database(join(__dirname, 'my-database.db'), (err) => {
       db.run(`CREATE TABLE IF NOT EXISTS weather (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         temperature REAL,
-        condition TEXT,
-        UNIQUE(temperature, condition)
+        condition TEXT
       )`);
 
       db.run(`CREATE TABLE IF NOT EXISTS location (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        latitude REAL,
-        longitude REAL,
-        description TEXT,
-        UNIQUE(latitude, longitude)
+        latitude DECIMAL(9, 6) NOT NULL,
+        longitude DECIMAL(9, 6) NOT NULL,
+        locationName TEXT
       )`);
 
       db.run(`CREATE TABLE IF NOT EXISTS fish (

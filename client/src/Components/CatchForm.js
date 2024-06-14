@@ -8,7 +8,6 @@ const endpoint = 'http://localhost:5000/api/catch';
 const fishEndpoint = 'http://localhost:5000/api/fish';
 const luresEndpoint = 'http://localhost:5000/api/lures';
 
-//Define Form
 const CatchForm = ({ onCatchAdded }) => {
   const [fish_id, setFishId] = useState('');
   const [fish, setFish] = useState([]);
@@ -18,14 +17,16 @@ const CatchForm = ({ onCatchAdded }) => {
   const [lures, setLures] = useState([]);
   const [selectedDateTime, setSelectedDateTime] = useState(new Date());
   const [file, setFile] = useState(null);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const [locationName, setLocationName] = useState("");
 
-  //Fetch data outside of react for lures
   useEffect(() => {
     const fetchLures = async () => {
       try {
         const response = await fetch(luresEndpoint);
         const data = await response.json();
-        console.log('Lure data:', data); // Debugging log
+        console.log('Lure data:', data);
         setLures(data);
       } catch (error) {
         console.error('Error fetching lures:', error);
@@ -34,13 +35,12 @@ const CatchForm = ({ onCatchAdded }) => {
     fetchLures();
   }, []);
 
-  //Fetch data ouutside of react for fish
   useEffect(() => {
     const fetchFish = async () => {
       try {
         const response = await fetch(fishEndpoint);
         const data = await response.json();
-        console.log('Fish data:', data); // Debugging log
+        console.log('Fish data:', data);
         setFish(data);
       } catch (error) {
         console.error('Error fetching fish:', error);
@@ -49,7 +49,6 @@ const CatchForm = ({ onCatchAdded }) => {
     fetchFish();
   }, []);
 
-  //Event Handlers begin
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
@@ -57,12 +56,16 @@ const CatchForm = ({ onCatchAdded }) => {
   const handleButtonClick = () => {
     document.getElementById('fishFileInput').click();
   };
-  //Event Handlers end
 
-  //Submit Form
+  const handlePositionChange = (position) => {
+    setLatitude(position[0]);
+    setLongitude(position[1]);
+    setLocationName(position[2]);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Submitting:', fish_id, size, weight, lure_id, selectedDateTime); // Debugging log
+    console.log('Submitting:', fish_id, size, weight, lure_id, selectedDateTime, latitude, longitude, locationName);
 
     const formData = new FormData();
     formData.append('fish_id', fish_id);
@@ -70,17 +73,20 @@ const CatchForm = ({ onCatchAdded }) => {
     formData.append('weight', weight);
     formData.append('lure_id', lure_id);
     formData.append('catchDateTime', selectedDateTime.toISOString());
+    formData.append('latitude', latitude);
+    formData.append('longitude', longitude);
+    formData.append('locationName', locationName); // Add location name to the form data
     formData.append('fishImage', file);
 
     try {
-      const response = await fetch(endpoint, { 
+      const response = await fetch(endpoint, {
         method: 'POST',
         body: formData,
       });
-      console.log('Response:', response); // Debugging log
+      console.log('Response:', response);
       if (response.ok) {
         const data = await response.json();
-        console.log('Fish created:', data); // Debugging log
+        console.log('Catch created:', data);
         onCatchAdded();
         // Clear form
         setFishId('');
@@ -89,6 +95,9 @@ const CatchForm = ({ onCatchAdded }) => {
         setLureId('');
         setSelectedDateTime(new Date());
         setFile(null);
+        setLatitude(null);
+        setLongitude(null);
+        setLocationName('');
       } else {
         console.error('Failed to create catch:', response.statusText);
       }
@@ -97,15 +106,14 @@ const CatchForm = ({ onCatchAdded }) => {
     }
   };
 
-  //Update VDOM
   return (
-    <Card size ="lg" sx={{ margin: 'auto', mt: 10 }}>
+    <Card size="lg" sx={{ margin: 'auto', mt: 10 }}>
       <CardContent>
         <Typography variant="h5" component="div" mb="1em">
           Fish stats
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-        <FormControl variant="outlined" required>
+          <FormControl variant="outlined" required>
             <InputLabel id="fish-label">Select Fish</InputLabel>
             <Select
               label="Select Fish"
@@ -133,7 +141,7 @@ const CatchForm = ({ onCatchAdded }) => {
             onChange={(e) => setSize(e.target.value)}
             required
           />
-          <TextField 
+          <TextField
             label="Fish weight(grams)"
             variant="outlined"
             value={weight}
@@ -175,7 +183,7 @@ const CatchForm = ({ onCatchAdded }) => {
             Choose File
           </Button>
           <Box maxWidth={"100%"} maxHeight={"100%"}>
-          <LeafletMap></LeafletMap>
+            <LeafletMap onPositionChange={handlePositionChange} />
           </Box>
           {file && <Typography variant="body2" sx={{ mt: 1 }}>{file.name}</Typography>}
           <Button type="submit" variant="contained" color="primary">
