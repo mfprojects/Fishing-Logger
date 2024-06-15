@@ -9,6 +9,7 @@ const StyledCard = ({ image, alt, details, onDelete }) => {
         flexDirection: 'column', 
         alignItems: 'left', 
         height: '100%',
+        backgroundColor: 'transparent',
         transition: 'transform 0.3s, box-shadow 0.3s',
         '&:hover': {
           transform: 'translateY(-10px)',

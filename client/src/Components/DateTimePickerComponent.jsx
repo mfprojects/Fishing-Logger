@@ -13,6 +13,8 @@ const DateTimePickerComponent = ({ value, onChange }) => {
         renderInput={(props) => <TextField {...props} fullWidth />}
         label="Date & Time"
         value={value}
+        //Denne gjorde den til max størrelse, eneste måten
+        slotProps={{ textField: { fullWidth: true } }}
         onChange={onChange}
       />
     </LocalizationProvider>

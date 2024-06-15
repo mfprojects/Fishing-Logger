@@ -7,7 +7,7 @@ const theme = createTheme({
     },
     primary: {
       main: '#007665',
-      contrastText: "#c5cfae",
+      contrastText: "#c5fcee",
     },
     secondary: {
       main: '#e57373',
@@ -36,11 +36,16 @@ const theme = createTheme({
   
   typography: {
     fontFamily: 'Poppins, Arial, sans-serif',
+    h2: {
+      
+    },
     h3: {
-      color: '#007665'
+      color: '#007665',
     },
     h4: {
-      color: '#007665'
+      color: '#007665',
+      fontWeight: 500,
+      letterSpacing: 6
     },
     h6: {
       color: '#ff8c5a'

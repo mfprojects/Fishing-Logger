@@ -64,7 +64,7 @@ const LeafletMap = ({ onPositionChange }) => {
   };
 
   return (
-    <div style={{ height: '50vh', width: '100%' }}>
+    <div style={{ height: '40vh', width: '100%', boxShadow: '0px 3px 6px rgba(0,0,0,0.16)' }}>
       <MapContainer
         center={mapCenter}
         zoom={13}

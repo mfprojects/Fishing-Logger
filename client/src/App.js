@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { AppBar, Toolbar, IconButton, Button, Box } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Button, Box, Grid } from '@mui/material';
 import Logo from './logo.png';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { ThemeProvider } from '@mui/material/styles';
@@ -19,19 +19,23 @@ function App() {
       <CssBaseline />
       <Router>
         <Box display="flex" flexDirection="column" minHeight="100vh">
-          <AppBar position="static" color="transparent"  elevation={0} sx={{ width: '100%'}}>
-            
-            <Toolbar sx={{ width: '100%', justifyContent: 'space-between' }}>
-              <Box id="Prime" display="flex" alignItems="center">
-                <IconButton component={Link} to="/" color="inherit" aria-label="menu">
-                  <img src={Logo} alt="Logo" style={{ maxHeight: '100px', maxWidth: '100px', paddingRight: '10px' }} />
-                </IconButton>
-                <Box sx={{ display: 'flex', gap: 2 }}>
-                  <Button color="primary" component={Link} to="/catch" sx={{ fontSize: '1rem' }}>Catch</Button>
-                  <Button color="primary" component={Link} to="/lures" sx={{ fontSize: '1rem' }}>Lures</Button>
-                  <Button color="primary" component={Link} to="/data" sx={{ fontSize: '1rem' }}>Data</Button>
-                </Box>
-              </Box>
+          <AppBar position="static" color="transparent" elevation={0} sx={{ width: '100%' }}>
+            <Toolbar sx={{ width: '100%' }}>
+              <Grid container alignItems="center">
+                <Grid item xs={4}>
+                  <IconButton component={Link} to="/" color="inherit" aria-label="menu">
+                    <img src={Logo} alt="Logo" style={{ maxHeight: '100px', maxWidth: '100px', paddingRight: '10px' }} />
+                  </IconButton>
+                </Grid>
+                <Grid item xs={4}>
+                  <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                    <Button color="primary" component={Link} to="/catch" sx={{ fontSize: '1rem' }}>Register Catch</Button>
+                    <Button color="primary" component={Link} to="/lures" sx={{ fontSize: '1rem' }}>Register Lures</Button>
+                    <Button color="primary" component={Link} to="/data" sx={{ fontSize: '1rem' }}>View Data</Button>
+                  </Box>
+                </Grid>
+                <Grid item xs={4} />
+              </Grid>
             </Toolbar>
           </AppBar>
 

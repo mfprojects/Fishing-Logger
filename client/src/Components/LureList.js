@@ -45,7 +45,7 @@ const LureList = ({ refresh, isDataVisible }) => {
     <Box m={2} display="flex" flexDirection="column" alignItems="center">
       {error && <Typography color="error">{error}</Typography>}
       {isDataVisible && (
-        <Paper elevation={0} sx={{ marginTop: 2, marginBottom: 2, padding: 2, width: '100%' }}>
+        <Paper elevation={0} sx={{ marginTop: 2, marginBottom: 2, padding: 2, width: '100%', backgroundColor: 'transparent' }}>
           <Grid container spacing={2}>
             {lures.map((lure) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={lure.id}>

@@ -107,15 +107,17 @@ const CatchForm = ({ onCatchAdded }) => {
   };
 
   return (
-    <Card size="lg" sx={{ margin: 'auto', mt: 10 }}>
+    <Card size="lg" sx={{ margin: 'auto', mt: 10, backgroundColor: 'transparent' }}>
       <CardContent>
-        <Typography variant="h5" component="div" mb="1em">
+        <Typography variant="h4" component="div" mb="1em">
           Location
         </Typography>
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Box sx={{ width: '100%', maxWidth: '1200px' }}>
             <LeafletMap onPositionChange={handlePositionChange} />
         </Box>
-        <Typography variant="h5" component="div" mb="1em" mt="1em">
+        </Box>
+        <Typography variant="h4" component="div" mb="1em" mt="1em">
           Fish Stats
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
@@ -182,7 +184,7 @@ const CatchForm = ({ onCatchAdded }) => {
           </Box>
 
           <Box sx={{ width: '100%', maxWidth: '600px' }}>
-            <DateTimePickerComponent value={selectedDateTime} onChange={setSelectedDateTime} />
+            <DateTimePickerComponent value={selectedDateTime} onChange={setSelectedDateTime}/>
           </Box>
 
           <Box sx={{ width: '100%', maxWidth: '600px' }}>

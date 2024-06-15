@@ -44,10 +44,10 @@ const LureForm = ({ onLureAdded }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 500, margin: 'auto', mt: 10 }}>
+    <Card sx={{ maxWidth: 500, margin: 'auto', mt: 10, backgroundColor: 'transparent' }}>
       <CardContent>
-        <Typography variant="h5" component="div" gutterBottom>
-          Create Lure
+        <Typography variant="h4" component="div" gutterBottom>
+          Lure Stats
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
           <TextField 
