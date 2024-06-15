@@ -110,85 +110,108 @@ const CatchForm = ({ onCatchAdded }) => {
     <Card size="lg" sx={{ margin: 'auto', mt: 10 }}>
       <CardContent>
         <Typography variant="h5" component="div" mb="1em">
-          Fish stats
+          Location
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-          <FormControl variant="outlined" required>
-            <InputLabel id="fish-label">Select Fish</InputLabel>
-            <Select
-              label="Select Fish"
-              labelId="fish-label"
-              id="fish"
-              value={fish_id}
-              onChange={(e) => setFishId(e.target.value)}
-            >
-              {fish.map((fish) => (
-                <MenuItem key={fish.id} value={fish.id}>{fish.typeOfFish}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <Typography>
-            Size: {size}cm
-          </Typography>
-          <Slider
-            defaultValue={1}
-            min={1}
-            max={200}
-            aria-label='Default'
-            valueLabelDisplay='auto'
-            value={size}
-            onChange={(e) => setSize(e.target.value)}
-            required
-          />
-          <TextField
-            label="Fish weight(grams)"
-            variant="outlined"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            required
-            fullWidth
-          />
-          <FormControl variant="outlined" required fullWidth>
-            <InputLabel id="lure-label">Select Lure</InputLabel>
-            <Select
-              label="Select Lure"
-              labelId="lure-label"
-              id="lure"
-              value={lure_id}
-              onChange={(e) => setLureId(e.target.value)}
-            >
-              {lures.map((lure) => (
-                <MenuItem key={lure.id} value={lure.id}>{lure.typeOfLure}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <div>
-            <DateTimePickerComponent value={selectedDateTime} onChange={setSelectedDateTime} />
-          </div>
-          <input
-            type="file"
-            id="fishFileInput"
-            style={{ display: 'none' }}
-            onChange={handleFileChange}
-            accept="image/*"
-            required
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleButtonClick}
-            startIcon={<CloudUpload />}
-          >
-            Choose File
-          </Button>
-          <Box maxWidth={"100%"} maxHeight={"100%"}>
+        <Box sx={{ width: '100%' }}>
             <LeafletMap onPositionChange={handlePositionChange} />
+        </Box>
+        <Typography variant="h5" component="div" mb="1em" mt="1em">
+          Fish Stats
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+          <Box sx={{ width: '100%', maxWidth: '600px' }}>
+            <FormControl variant="outlined" required fullWidth>
+              <InputLabel id="fish-label">Select Fish</InputLabel>
+              <Select
+                label="Select Fish"
+                labelId="fish-label"
+                id="fish"
+                value={fish_id}
+                onChange={(e) => setFishId(e.target.value)}
+              >
+                {fish.map((fish) => (
+                  <MenuItem key={fish.id} value={fish.id}>{fish.typeOfFish}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Box>
+
+          <Box sx={{ width: '100%', maxWidth: '600px' }}>
+            <Typography>
+              Size: {size}cm
+            </Typography>
+            <Slider
+              defaultValue={1}
+              min={1}
+              max={200}
+              aria-label='Default'
+              valueLabelDisplay='auto'
+              value={size}
+              onChange={(e) => setSize(e.target.value)}
+              required
+              fullWidth
+            />
+          </Box>
+
+          <Box sx={{ width: '100%', maxWidth: '600px' }}>
+            <TextField
+              label="Fish weight(grams)"
+              variant="outlined"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+              required
+              fullWidth
+            />
+          </Box>
+
+          <Box sx={{ width: '100%', maxWidth: '600px' }}>
+            <FormControl variant="outlined" required fullWidth>
+              <InputLabel id="lure-label">Select Lure</InputLabel>
+              <Select
+                label="Select Lure"
+                labelId="lure-label"
+                id="lure"
+                value={lure_id}
+                onChange={(e) => setLureId(e.target.value)}
+              >
+                {lures.map((lure) => (
+                  <MenuItem key={lure.id} value={lure.id}>{lure.typeOfLure}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+
+          <Box sx={{ width: '100%', maxWidth: '600px' }}>
+            <DateTimePickerComponent value={selectedDateTime} onChange={setSelectedDateTime} />
+          </Box>
+
+          <Box sx={{ width: '100%', maxWidth: '600px' }}>
+            <input
+              type="file"
+              id="fishFileInput"
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
+              accept="image/*"
+              required
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleButtonClick}
+              startIcon={<CloudUpload />}
+              fullWidth
+            >
+              Choose File
+            </Button>
+          </Box>
+
           {file && <Typography variant="body2" sx={{ mt: 1 }}>{file.name}</Typography>}
-          <Button type="submit" variant="contained" color="primary">
-            Submit
-          </Button>
+
+          <Box sx={{ width: '100%', maxWidth: '600px' }}>
+            <Button type="submit" variant="contained" color="primary" fullWidth>
+              Submit
+            </Button>
+          </Box>
         </Box>
       </CardContent>
     </Card>

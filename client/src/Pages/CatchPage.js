@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { Container, Paper, Box, Typography, Button } from '@mui/material';
-import LureForm from './LureForm';
-import LureList from './LureList';
-import PageWrapper from './PageWrapper';
+import CatchForm from '../Components/CatchForm';
+import CatchList from '../Components/CatchList';
+import PageWrapper from '../Components/PageWrapper';
 
-const LurePage = () => {
-
-  const [refresh, setRefresh] = useState(false);
+const CatchPage = () => {
+  const [refreshCatch, setRefreshCatch] = useState(false);
   const [isDataVisible, setIsDataVisible] = useState(true);
 
-  const handleLureAdded = () => {
-    setRefresh((prev) => !prev);
+  const handleCatchAdded = () => {
+    setRefreshCatch((prev) => !prev);
     setIsDataVisible(true);
   };
 
@@ -24,9 +23,9 @@ const LurePage = () => {
         <Paper elevation={2}>
           <Box p={3}>
             <Typography variant="h4" align='center' gutterBottom>
-              Register a Lure
+              Register a Catch
             </Typography>
-            <LureForm onLureAdded={handleLureAdded} />
+            <CatchForm onCatchAdded={handleCatchAdded} />
             <Box m={2} display="flex" flexDirection="column" alignItems="center">
               <Button
                 variant="contained"
@@ -34,10 +33,10 @@ const LurePage = () => {
                 onClick={toggleVisibility}
                 sx={{ mt: 2 }}
               >
-                {isDataVisible ? 'Hide Lures' : 'Show Lures'}
+                {isDataVisible ? 'Hide Catches' : 'Show Catches'}
               </Button>
             </Box>
-            <LureList refresh={refresh} isDataVisible={isDataVisible} />
+            <CatchList refreshCatch={refreshCatch} isDataVisible={isDataVisible} />
           </Box>
         </Paper>
       </Container>
@@ -45,4 +44,4 @@ const LurePage = () => {
   );
 };
 
-export default LurePage;
+export default CatchPage;

@@ -34,7 +34,6 @@ const theme = createTheme({
     },
   },
   
-  //Må utarbeide en mer gjennomført fonthåndtering senere
   typography: {
     fontFamily: 'Poppins, Arial, sans-serif',
     h3: {
@@ -56,9 +55,35 @@ const theme = createTheme({
           borderRadius: '8px',
           textTransform: 'none',
           boxShadow: '0px 3px 6px rgba(0,0,0,0.16)',
+          '&:hover': {
+            backgroundColor: 'rgba(0, 118, 101, 0.1)', // Example hover effect
+          },
         },
       },
     },
+
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          fontSize: '1rem',
+          padding: '10px',
+          borderRadius: '8px',
+          '&:hover': {
+            backgroundColor: 'inherit', // No hover effect
+            boxShadow: 'none', // No shadow on hover
+          },
+          '&:active': {
+            backgroundColor: 'inherit', // No click effect
+            boxShadow: 'none', // No shadow on click
+          },
+          '&:focus': {
+            backgroundColor: 'inherit', // No focus effect
+            boxShadow: 'none', // No shadow on focus
+          }
+        },
+      },
+    },
+
     MuiMenuItem: {
       styleOverrides: {
         root: {
@@ -79,7 +104,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           boxShadow: 'none',
-          borderBottom: '1px solid #E0E0E0',
+          borderBottom: 'none', // Remove border-bottom
         },
       },
     },
@@ -91,9 +116,9 @@ const theme = createTheme({
       },
     },
   },
-    gradients: {
-      frontPage: 'linear-gradient(0deg, rgba(119,227,239,1) 0%, rgba(255,238,203,1) 100%)',
-    },
+  gradients: {
+    frontPage: 'linear-gradient(0deg, rgba(119,227,239,1) 0%, rgba(255,238,203,1) 100%)',
+  },
 });
 
 export default theme;

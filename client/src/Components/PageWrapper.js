@@ -11,7 +11,6 @@ const PageWrapper = ({ children }) => {
         textAlign: 'center', 
         position: 'relative',
         background: theme.gradients.frontPage,
-        //paddingTop: '64px'
       }}>
       {children}
     </Box>
